@@ -11,7 +11,7 @@ import axios from 'axios'
  *   const BASE = 'https://your-app.up.railway.app'
  * =====================================================
  */
-const BASE = import.meta.env.VITE_API_URL || 'https://YOUR-RAILWAY-URL.up.railway.app'
+const BASE = import.meta.env.VITE_API_URL || 'https://unigroupsbackend-production.up.railway.app/'
 
 const api = axios.create({
   baseURL: BASE,
