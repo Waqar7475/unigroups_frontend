@@ -21,15 +21,8 @@ export default function Input({ label, hint, icon, type='text', placeholder='', 
         <input
           type={type} placeholder={placeholder} value={value} onChange={onChange}
           required={required} min={min} max={max} disabled={disabled}
-          className={`w-full py-2.5 px-4 text-sm
-            bg-[var(--bg-base)] border border-[var(--border)]
-            text-[var(--text-primary)] placeholder-[var(--text-faint)]
-            rounded-xl outline-none transition-all duration-200
-            focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15
-            focus:scale-[1.01]
-            disabled:opacity-40
-            ${icon ? 'pl-10' : ''}
-            ${mono ? 'font-mono tracking-wider uppercase text-indigo-600 dark:text-indigo-400' : ''}`}
+          className={`w-full py-2.5 px-4 text-sm text-[var(--text-primary)] placeholder-[var(--text-faint)] rounded-xl outline-none transition-all duration-200 focus:ring-2 focus:ring-indigo-500/20 focus:scale-[1.01] disabled:opacity-40 ${icon ? 'pl-10' : ''} ${mono ? 'font-mono tracking-wider uppercase text-indigo-600 dark:text-indigo-400' : ''}`}
+          style={{background:'var(--bg-raised)',border:'1px solid var(--border)',backdropFilter:'blur(12px)'}}
         />
       </div>
     </motion.div>

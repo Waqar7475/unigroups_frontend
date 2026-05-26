@@ -1,13 +1,13 @@
 import { motion } from 'framer-motion'
-import Icon     from '../ui/Icons.jsx'
-import Badge    from '../ui/Badge.jsx'
-import Button   from '../ui/Button.jsx'
+import Icon   from '../ui/Icons.jsx'
+import Badge  from '../ui/Badge.jsx'
+import Button from '../ui/Button.jsx'
 import { Progress } from '../ui/misc.jsx'
 import { spring, fadeUp } from '../../utils/animations.js'
 
 const DEPT = {
-  SE:{ label:'Software Engineering', bar:'bg-orange-400', chip:'bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-400/10 dark:text-orange-400 dark:border-orange-400/20' },
-  CS:{ label:'Computer Science',     bar:'bg-cyan-400',   chip:'bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-400/10 dark:text-cyan-400 dark:border-cyan-400/20'           },
+  SE:{ label:'Software Engineering', gradient:'from-orange-500 to-amber-500',   chip:'bg-orange-50 text-orange-600 border-orange-200 dark:bg-orange-400/10 dark:text-orange-400 dark:border-orange-400/20' },
+  CS:{ label:'Computer Science',     gradient:'from-cyan-500 to-blue-500',       chip:'bg-cyan-50 text-cyan-600 border-cyan-200 dark:bg-cyan-400/10 dark:text-cyan-400 dark:border-cyan-400/20'           },
 }
 
 export default function GroupCard({ group, onClick, showJoin=false, onJoin, compact=false, joinLoading=false }) {
@@ -15,17 +15,22 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
   const full = mc >= group.max_members
   const isMine = !!group.my_role
   const d    = DEPT[group.department] || DEPT.SE
+  const pct  = Math.round((mc/group.max_members)*100)
 
   if (compact) return (
-    <motion.div
-      variants={fadeUp}
+    <motion.div variants={fadeUp}
       whileHover={{ x:4, transition:spring.snappy }}
       whileTap={{ scale:0.98 }}
       onClick={onClick}
-      className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl flex items-center gap-4 px-4 py-3.5 cursor-pointer hover:border-indigo-400/50 dark:hover:border-indigo-500/30 hover:shadow-md hover:shadow-black/5 transition-colors group">
-      <motion.div whileHover={{scale:1.1}} className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold ${d.chip}`}>
+      className="group flex items-center gap-4 px-4 py-3.5 rounded-2xl cursor-pointer transition-all"
+      style={{
+        background:'var(--bg-surface)',
+        border:'1px solid var(--border)',
+        backdropFilter:'blur(20px)',
+      }}>
+      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-xs font-bold text-white bg-gradient-to-br ${d.gradient} shadow-lg`}>
         {group.department}
-      </motion.div>
+      </div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5 flex-wrap">
           <h3 className="font-bold text-sm text-[var(--text-primary)] truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{group.name}</h3>
@@ -39,27 +44,73 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
   )
 
   return (
-    <motion.div
-      variants={fadeUp}
-      whileHover={{ y:-4, scale:1.01, transition:spring.snappy }}
+    <motion.div variants={fadeUp}
+      whileHover={{ y:-6, scale:1.01, transition:spring.snappy }}
       whileTap={{ scale:0.98 }}
       onClick={onClick}
-      className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl overflow-hidden cursor-pointer hover:border-indigo-400/50 dark:hover:border-indigo-500/30 hover:shadow-xl hover:shadow-black/8 dark:hover:shadow-black/30 transition-colors flex flex-col group">
-      <motion.div className={`h-1 w-full ${d.bar}`}
-        whileHover={{ scaleX:1, originX:0 }}/>
-      <div className="p-5 flex flex-col gap-4">
+      className="group rounded-2xl overflow-hidden cursor-pointer flex flex-col relative"
+      style={{
+        background:'var(--bg-surface)',
+        backdropFilter:'blur(24px) saturate(160%)',
+        WebkitBackdropFilter:'blur(24px) saturate(160%)',
+        border:'1px solid var(--border)',
+        boxShadow:'var(--shadow-sm)',
+        transition:'box-shadow 0.2s, border-color 0.2s',
+      }}
+      onHoverStart={e => e.target.style && (e.target.style.boxShadow = 'var(--shadow-lg)')}
+      onHoverEnd={e => e.target.style && (e.target.style.boxShadow = 'var(--shadow-sm)')}>
+
+      {/* Gradient top bar */}
+      <div className={`h-1 w-full bg-gradient-to-r ${d.gradient}`}/>
+
+      {/* Glow effect on hover */}
+      <motion.div
+        className="absolute inset-0 rounded-2xl opacity-0 group-hover:opacity-100 pointer-events-none transition-opacity duration-300"
+        style={{
+          background: group.department==='SE'
+            ? 'radial-gradient(ellipse at 50% 0%, rgba(249,115,22,0.05), transparent 60%)'
+            : 'radial-gradient(ellipse at 50% 0%, rgba(6,182,212,0.05), transparent 60%)',
+        }}/>
+
+      <div className="p-5 flex flex-col gap-4 relative">
+        {/* Header */}
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <motion.span whileHover={{scale:1.02}} className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-md mb-2 ${d.chip}`}>
-              {d.label}
-            </motion.span>
-            <h3 className="font-bold text-base text-[var(--text-primary)] leading-snug truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{group.name}</h3>
+            <div className="flex items-center gap-2 mb-2">
+              <span className={`inline-flex items-center text-[11px] font-bold px-2.5 py-1 rounded-lg border ${d.chip}`}>
+                {group.department}
+              </span>
+              <span className="text-[11px] text-[var(--text-muted)] font-medium">{d.label}</span>
+            </div>
+            <h3 className="font-bold text-base text-[var(--text-primary)] leading-snug group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{group.name}</h3>
             {group.description && <p className="text-xs text-[var(--text-muted)] mt-1 line-clamp-1">{group.description}</p>}
           </div>
-          <Badge variant={group.status}>{group.status==='open'?<Icon name="unlock" size={9}/>:<Icon name="lock" size={9}/>}{group.status==='open'?'Open':'Locked'}</Badge>
+          <Badge variant={group.status}>
+            {group.status==='open'?<Icon name="unlock" size={9}/>:<Icon name="lock" size={9}/>}
+            {group.status==='open'?'Open':'Locked'}
+          </Badge>
         </div>
-        <Progress current={mc} max={group.max_members}/>
-        <div className="flex items-center justify-between gap-2 pt-1 border-t border-[var(--border)]">
+
+        {/* Progress */}
+        <div>
+          <div className="flex justify-between items-center mb-1.5">
+            <span className="text-xs font-medium text-[var(--text-muted)]">Members</span>
+            <span className="text-xs font-bold text-[var(--text-primary)]">{mc}<span className="text-[var(--text-muted)] font-normal">/{group.max_members}</span></span>
+          </div>
+          <div className="h-1.5 rounded-full overflow-hidden" style={{background:'var(--bg-raised)'}}>
+            <motion.div
+              initial={{width:0}}
+              animate={{width:`${pct}%`}}
+              transition={{...spring.smooth, delay:0.2}}
+              className={`h-full rounded-full bg-gradient-to-r ${full?'from-red-500 to-red-400':pct>=75?'from-amber-500 to-amber-400':'from-indigo-500 to-violet-500'}`}/>
+          </div>
+          <p className="text-xs text-[var(--text-faint)] mt-1">
+            {full ? 'Full — no slots remaining' : `${group.max_members-mc} slot${group.max_members-mc!==1?'s':''} remaining`}
+          </p>
+        </div>
+
+        {/* Footer */}
+        <div className="flex items-center justify-between gap-2 pt-1" style={{borderTop:'1px solid var(--border)'}}>
           {isMine
             ? <Badge variant={group.my_role}>{group.my_role==='leader'&&<Icon name="crown" size={9}/>}{group.my_role}</Badge>
             : <span className="text-[11px] text-[var(--text-faint)] flex items-center gap-1"><Icon name="calendar" size={10}/>{group.created_at?.split('T')[0]}</span>}

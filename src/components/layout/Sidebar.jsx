@@ -6,10 +6,10 @@ import { Avatar }  from '../ui/misc.jsx'
 import { spring, staggerContainer, fadeUp } from '../../utils/animations.js'
 
 const NAV = [
-  { id:'dashboard',     label:'Dashboard',     icon:'dashboard'  },
-  { id:'create-group',  label:'Create Group',  icon:'plus'       },
-  { id:'browse-groups', label:'Browse Groups', icon:'search'     },
-  { id:'my-groups',     label:'My Groups',     icon:'users'      },
+  { id:'dashboard',     label:'Dashboard',     icon:'dashboard' },
+  { id:'create-group',  label:'Create Group',  icon:'plus'      },
+  { id:'browse-groups', label:'Browse Groups', icon:'search'    },
+  { id:'my-groups',     label:'My Groups',     icon:'users'     },
 ]
 const ADMIN_NAV = [
   { id:'admin-groups', label:'All Groups',      icon:'layers'      },
@@ -18,31 +18,53 @@ const ADMIN_NAV = [
 
 function NavItem({ item, active, onClick, isAdmin }) {
   return (
-    <motion.button
-      onClick={onClick}
+    <motion.button onClick={onClick}
       whileHover={{ x:3, transition:spring.snappy }}
       whileTap={{ scale:0.97, transition:spring.instant }}
-      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-colors group
+      className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group relative overflow-hidden
         ${active
           ? isAdmin
-            ? 'bg-red-50 text-red-700 border border-red-200 dark:bg-red-500/10 dark:text-red-400 dark:border-red-500/20'
-            : 'bg-indigo-50 text-indigo-700 border border-indigo-200 dark:bg-indigo-500/15 dark:text-indigo-400 dark:border-indigo-500/20'
-          : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-raised)] border border-transparent'}`}>
+            ? 'text-red-600 dark:text-red-400'
+            : 'text-indigo-600 dark:text-indigo-400'
+          : 'text-[var(--text-secondary)] hover:text-[var(--text-primary)]'}`}
+      style={active ? {
+        background: isAdmin
+          ? 'rgba(239,68,68,0.08)'
+          : 'rgba(99,102,241,0.08)',
+        border: `1px solid ${isAdmin ? 'rgba(239,68,68,0.15)' : 'rgba(99,102,241,0.15)'}`,
+        backdropFilter: 'blur(12px)',
+      } : {
+        background: 'transparent',
+        border: '1px solid transparent',
+      }}>
+      {active && (
+        <motion.div
+          layoutId={isAdmin ? 'admin-active' : 'nav-active'}
+          className="absolute inset-0 rounded-xl"
+          style={{
+            background: isAdmin
+              ? 'linear-gradient(135deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02))'
+              : 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.03))',
+          }}
+          transition={spring.smooth}/>
+      )}
       <motion.div
         animate={active ? { scale:1.1 } : { scale:1 }}
         transition={spring.bouncy}
-        className={`w-7 h-7 rounded-lg flex items-center justify-center shrink-0 transition-colors
-          ${active
-            ? isAdmin ? 'bg-red-100 dark:bg-red-500/20' : 'bg-indigo-100 dark:bg-indigo-500/20'
-            : 'bg-[var(--bg-raised)] group-hover:bg-[var(--bg-hover)]'}`}>
+        className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 relative z-10 transition-all"
+        style={active ? {
+          background: isAdmin ? 'rgba(239,68,68,0.12)' : 'rgba(99,102,241,0.12)',
+        } : {
+          background: 'var(--bg-raised)',
+        }}>
         <Icon name={item.icon} size={14}
           className={active
             ? isAdmin ? 'text-red-600 dark:text-red-400' : 'text-indigo-600 dark:text-indigo-400'
             : 'text-[var(--text-muted)]'}/>
       </motion.div>
-      {item.label}
+      <span className="relative z-10">{item.label}</span>
       {active && (
-        <motion.div initial={{opacity:0,x:-5}} animate={{opacity:1,x:0}} transition={spring.snappy} className="ml-auto">
+        <motion.div initial={{opacity:0,x:-5}} animate={{opacity:1,x:0}} transition={spring.snappy} className="ml-auto relative z-10">
           <Icon name="chevronRight" size={13} className={isAdmin ? 'text-red-400 opacity-60' : 'text-indigo-400 opacity-60'}/>
         </motion.div>
       )}
@@ -59,25 +81,28 @@ export default function Sidebar({ open, setOpen }) {
     <>
       <AnimatePresence>
         {open && (
-          <motion.div
-            initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
+          <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
             transition={{duration:0.2}}
-            className="fixed inset-0 z-40 bg-black/40 backdrop-blur-sm lg:hidden"
+            className="fixed inset-0 z-40 lg:hidden"
+            style={{background:'rgba(0,0,0,0.5)', backdropFilter:'blur(4px)'}}
             onClick={() => setOpen(false)}/>
         )}
       </AnimatePresence>
 
-      <motion.aside
-        initial={false}
-        animate={{ x: open ? 0 : undefined }}
-        className={`fixed top-16 left-0 bottom-0 z-40 w-64 bg-[var(--bg-surface)] border-r border-[var(--border)] flex flex-col transition-transform duration-300 ${open?'translate-x-0':'-translate-x-full lg:translate-x-0'}`}>
+      <aside
+        className={`fixed top-16 left-0 bottom-0 z-40 w-64 flex flex-col transition-transform duration-300 ${open?'translate-x-0':'-translate-x-full lg:translate-x-0'}`}
+        style={{
+          background: 'var(--bg-base)',
+          borderRight: '1px solid var(--border)',
+          backdropFilter: 'blur(24px)',
+        }}>
 
-        <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto">
-          <motion.p
-            initial={{opacity:0}} animate={{opacity:1}} transition={{delay:0.1}}
-            className="px-3 mb-3 text-[10px] font-bold uppercase tracking-widest text-[var(--text-faint)]">
-            Navigation
-          </motion.p>
+        {/* Subtle gradient top */}
+        <div className="absolute top-0 left-0 right-0 h-32 pointer-events-none"
+          style={{background:'radial-gradient(ellipse at 50% 0%, rgba(99,102,241,0.06), transparent 70%)'}}/>
+
+        <nav className="flex-1 px-3 py-5 space-y-0.5 overflow-y-auto relative">
+          <p className="px-3 mb-3 text-[10px] font-bold uppercase tracking-widest text-[var(--text-faint)]">Navigation</p>
 
           <motion.div variants={staggerContainer} initial="animate" animate="animate" className="space-y-0.5">
             {NAV.map((item, i) => (
@@ -105,14 +130,21 @@ export default function Sidebar({ open, setOpen }) {
           )}
         </nav>
 
-        <motion.div
-          initial={{opacity:0, y:10}} animate={{opacity:1, y:0}} transition={{...spring.smooth, delay:0.4}}
-          className="px-3 py-4 border-t border-[var(--border)]">
-          <motion.div whileHover={{scale:1.01}} className="flex items-center gap-3 px-3 py-3 rounded-xl bg-[var(--bg-raised)] border border-[var(--border)]">
+        <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{...spring.smooth,delay:0.4}}
+          className="px-3 py-4 relative"
+          style={{borderTop:'1px solid var(--border)'}}>
+          <motion.div whileHover={{scale:1.01}}
+            className="flex items-center gap-3 px-3 py-3 rounded-xl"
+            style={{
+              background:'var(--bg-raised)',
+              border:'1px solid var(--border)',
+              backdropFilter:'blur(12px)',
+            }}>
             <div className="relative shrink-0">
               <Avatar initials={user?.name?.slice(0,2)} dept={user?.department} size="sm"/>
               <motion.div
-                animate={{ scale:[1,1.2,1] }} transition={{ repeat:Infinity, duration:2, delay:1 }}
+                animate={{ scale:[1,1.3,1], opacity:[1,0.7,1] }}
+                transition={{ repeat:Infinity, duration:2.5, delay:1 }}
                 className="absolute -bottom-0.5 -right-0.5 w-2.5 h-2.5 bg-green-400 rounded-full border-2 border-[var(--bg-raised)]"/>
             </div>
             <div className="flex-1 min-w-0">
@@ -121,7 +153,7 @@ export default function Sidebar({ open, setOpen }) {
             </div>
           </motion.div>
         </motion.div>
-      </motion.aside>
+      </aside>
     </>
   )
 }

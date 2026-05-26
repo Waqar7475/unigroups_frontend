@@ -38,7 +38,7 @@ export default function Login({ onSwitch }) {
   return (
     <div className="min-h-screen bg-[var(--bg-base)] flex">
       {/* Left panel */}
-      <div className="hidden lg:flex flex-col justify-between w-5/12 bg-[var(--bg-surface)] border-r border-[var(--border)] p-12">
+      <div className="hidden lg:flex flex-col justify-between w-5/12 p-12" style={{background:"var(--bg-surface)",borderRight:"1px solid var(--border)",backdropFilter:"blur(24px)"}}>
         <div>
           <div className="flex items-center gap-3 mb-16">
             <div className="w-9 h-9 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
@@ -59,7 +59,7 @@ export default function Login({ onSwitch }) {
         </div>
       </div>
       {/* Right form */}
-      <div className="flex-1 flex items-center justify-center p-8">
+      <div className="flex-1 flex items-center justify-center p-8" style={{background:"var(--bg-base)"}}>
         <div className="w-full max-w-sm">
           <div className="flex items-center gap-3 mb-10 lg:hidden">
             <div className="w-8 h-8 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
