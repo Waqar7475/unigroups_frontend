@@ -63,7 +63,7 @@ export default function Dashboard() {
       <div className="flex items-start justify-between gap-4 flex-wrap">
         <div>
           <p className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-1">Welcome back</p>
-          <h1 className="text-3xl font-bold text-[var(--text-primary)]">{user?.name} 👋</h1>
+          <h1 className="text-3xl font-bold text-[var(--text-primary)]">{user?.name}</h1>
           <div className="flex items-center gap-2 mt-2 flex-wrap">
             <span className="text-xs font-mono text-indigo-600 dark:text-indigo-400">{user?.roll_number}</span>
             {myDept && <Badge variant={myDept==='SE'?'se':'cs'}>{myDept==='SE'?'Software Engineering':'Computer Science'}</Badge>}
@@ -85,11 +85,20 @@ export default function Dashboard() {
         <p className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-widest mb-3">Quick Actions</p>
         <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
           {[{icon:'plus',label:'Create Group',desc:'Start a new team',page:'create-group'},{icon:'search',label:'Browse Groups',desc:'Find groups to join',page:'browse-groups'},{icon:'users',label:'My Groups',desc:'View your memberships',page:'my-groups'}].map(a=>(
-            <button key={a.page} onClick={()=>navigate(a.page)} className="flex items-center gap-4 p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border)] hover:border-indigo-400/50 hover:bg-[var(--bg-raised)] transition-all group text-left">
-              <div className="w-11 h-11 rounded-xl bg-[var(--bg-raised)] group-hover:bg-indigo-500/15 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0 transition-all"><Icon name={a.icon} size={18}/></div>
-              <div className="flex-1"><p className="font-semibold text-sm text-[var(--text-primary)] group-hover:text-indigo-600 dark:text-indigo-400 transition-colors">{a.label}</p><p className="text-xs text-[var(--text-muted)] mt-0.5">{a.desc}</p></div>
-              <Icon name="arrowRight" size={15} className="text-[var(--text-faint)] group-hover:text-indigo-600 dark:text-indigo-400 transition-all shrink-0"/>
-            </button>
+            <motion.button key={a.page} onClick={()=>navigate(a.page)}
+              whileHover={{ x:4, scale:1.01, borderColor:'rgba(99,102,241,0.4)', boxShadow:'0 8px 30px rgba(99,102,241,0.08)', transition:{type:'spring',stiffness:500,damping:28} }}
+              whileTap={{ scale:0.97, transition:{type:'spring',stiffness:600,damping:30} }}
+              className="flex items-center gap-4 p-4 rounded-2xl bg-[var(--bg-surface)] border border-[var(--border)] transition-colors group text-left">
+              <motion.div
+                whileHover={{ scale:1.12, rotate:[-3,3,-3,0], transition:{duration:0.3} }}
+                className="w-11 h-11 rounded-xl bg-[var(--bg-raised)] group-hover:bg-indigo-500/10 flex items-center justify-center text-indigo-600 dark:text-indigo-400 shrink-0 transition-colors">
+                <Icon name={a.icon} size={18}/>
+              </motion.div>
+              <div className="flex-1"><p className="font-semibold text-sm text-[var(--text-primary)] group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{a.label}</p><p className="text-xs text-[var(--text-muted)] mt-0.5">{a.desc}</p></div>
+              <motion.div whileHover={{x:3}} transition={{type:'spring',stiffness:500}}>
+                <Icon name="arrowRight" size={15} className="text-[var(--text-faint)] group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors shrink-0"/>
+              </motion.div>
+            </motion.button>
           ))}
         </div>
       </div>

@@ -35,7 +35,7 @@ export default function Navbar({ onMenuToggle }) {
         <motion.div whileHover={{scale:1.08, rotate:5}} whileTap={{scale:0.95}} transition={spring.bouncy}
           className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30"
           style={{background:'linear-gradient(135deg,#4f46e5,#7c3aed)'}}>
-          <Icon name="layers" size={15} className="text-white"/>
+          <Icon name="graduationCap" size={15} className="text-white"/>
         </motion.div>
         <span className="font-bold text-base text-[var(--text-primary)] tracking-tight hidden sm:block">UniGroups</span>
         {isAdmin && <Badge variant="admin">Admin</Badge>}

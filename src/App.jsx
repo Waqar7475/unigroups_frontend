@@ -33,7 +33,7 @@ function Loading() {
         animate={{ scale:[1,1.08,1], rotate:[0,5,-5,0] }}
         transition={{ repeat:Infinity, duration:2, ease:'easeInOut' }}
         className="w-14 h-14 rounded-2xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center shadow-xl shadow-indigo-500/30">
-        <Icon name="layers" size={22} className="text-white"/>
+        <Icon name="graduationCap" size={22} className="text-white"/>
       </motion.div>
       <motion.div
         animate={{ rotate:360 }}

@@ -112,7 +112,7 @@ export default function Signup({ onSwitch }) {
         <div>
           <div className="flex items-center gap-3 mb-16">
             <div className="w-9 h-9 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
-              <Icon name="layers" size={18} className="text-white"/>
+              <Icon name="graduationCap" size={18} className="text-white"/>
             </div>
             <span className="font-bold text-lg text-[var(--text-primary)]">UniGroups</span>
           </div>
@@ -137,7 +137,7 @@ export default function Signup({ onSwitch }) {
         <div className="w-full max-w-md">
           <div className="flex items-center gap-3 mb-10 lg:hidden">
             <div className="w-8 h-8 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
-              <Icon name="layers" size={16} className="text-white"/>
+              <Icon name="graduationCap" size={16} className="text-white"/>
             </div>
             <span className="font-bold text-[var(--text-primary)]">UniGroups</span>
           </div>
