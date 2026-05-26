@@ -1,4 +1,7 @@
+import { motion } from 'framer-motion'
 import Icon from './Icons.jsx'
+import { buttonTap, buttonHover } from '../../utils/animations.js'
+
 export default function Button({ children, variant='primary', size='md', loading=false, disabled=false, onClick, type='button', className='', fullWidth=false }) {
   const v = {
     primary:   'bg-indigo-600 hover:bg-indigo-700 text-white shadow-sm shadow-indigo-500/20 dark:bg-indigo-500 dark:hover:bg-indigo-600',
@@ -15,9 +18,13 @@ export default function Button({ children, variant='primary', size='md', loading
     lg: 'px-6 py-3 text-sm rounded-xl gap-2',
   }
   return (
-    <button type={type} onClick={onClick} disabled={disabled||loading}
-      className={`inline-flex items-center justify-center font-semibold transition-all duration-150 active:scale-[0.97] focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed ${v[variant]||v.primary} ${s[size]||s.md} ${fullWidth?'w-full':''} ${className}`}>
+    <motion.button
+      type={type} onClick={onClick}
+      disabled={disabled||loading}
+      whileHover={!disabled && !loading ? buttonHover : {}}
+      whileTap={!disabled && !loading ? buttonTap : {}}
+      className={`inline-flex items-center justify-center font-semibold transition-colors duration-150 focus:outline-none disabled:opacity-40 disabled:cursor-not-allowed ${v[variant]||v.primary} ${s[size]||s.md} ${fullWidth?'w-full':''} ${className}`}>
       {loading ? <><Icon name="loader" size={14} className="animate-spin"/> Loading…</> : children}
-    </button>
+    </motion.button>
   )
 }

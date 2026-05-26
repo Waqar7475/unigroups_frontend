@@ -1,12 +1,13 @@
+import { motion } from 'framer-motion'
 import Icon     from '../ui/Icons.jsx'
-import Card     from '../ui/Card.jsx'
 import Badge    from '../ui/Badge.jsx'
 import Button   from '../ui/Button.jsx'
 import { Progress } from '../ui/misc.jsx'
+import { spring, fadeUp } from '../../utils/animations.js'
 
 const DEPT = {
-  SE:{ label:'Software Engineering', bar:'bg-orange-400', chip:'bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-400/10 dark:text-orange-400 dark:border-orange-400/20', icon:'monitor' },
-  CS:{ label:'Computer Science',     bar:'bg-cyan-400',   chip:'bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-400/10 dark:text-cyan-400 dark:border-cyan-400/20',           icon:'code2' },
+  SE:{ label:'Software Engineering', bar:'bg-orange-400', chip:'bg-orange-50 text-orange-600 border border-orange-200 dark:bg-orange-400/10 dark:text-orange-400 dark:border-orange-400/20' },
+  CS:{ label:'Computer Science',     bar:'bg-cyan-400',   chip:'bg-cyan-50 text-cyan-600 border border-cyan-200 dark:bg-cyan-400/10 dark:text-cyan-400 dark:border-cyan-400/20'           },
 }
 
 export default function GroupCard({ group, onClick, showJoin=false, onJoin, compact=false, joinLoading=false }) {
@@ -16,8 +17,15 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
   const d    = DEPT[group.department] || DEPT.SE
 
   if (compact) return (
-    <Card onClick={onClick} className="flex items-center gap-4 !py-3.5 group">
-      <div className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-lg ${d.chip}`}>{d.icon}</div>
+    <motion.div
+      variants={fadeUp}
+      whileHover={{ x:4, transition:spring.snappy }}
+      whileTap={{ scale:0.98 }}
+      onClick={onClick}
+      className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl flex items-center gap-4 px-4 py-3.5 cursor-pointer hover:border-indigo-400/50 dark:hover:border-indigo-500/30 hover:shadow-md hover:shadow-black/5 transition-colors group">
+      <motion.div whileHover={{scale:1.1}} className={`w-10 h-10 rounded-xl flex items-center justify-center shrink-0 text-sm font-bold ${d.chip}`}>
+        {group.department}
+      </motion.div>
       <div className="flex-1 min-w-0">
         <div className="flex items-center gap-2 mb-0.5 flex-wrap">
           <h3 className="font-bold text-sm text-[var(--text-primary)] truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{group.name}</h3>
@@ -27,16 +35,24 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
         <p className={`text-xs font-medium ${group.department==='SE'?'text-orange-600 dark:text-orange-400':'text-cyan-600 dark:text-cyan-400'}`}>{d.label} · {mc}/{group.max_members}</p>
       </div>
       <Icon name="chevronRight" size={15} className="text-[var(--text-faint)] group-hover:text-[var(--text-muted)] transition-colors shrink-0"/>
-    </Card>
+    </motion.div>
   )
 
   return (
-    <Card onClick={onClick} className="flex flex-col overflow-hidden !p-0 group">
-      <div className={`h-1 w-full ${d.bar}`}/>
+    <motion.div
+      variants={fadeUp}
+      whileHover={{ y:-4, scale:1.01, transition:spring.snappy }}
+      whileTap={{ scale:0.98 }}
+      onClick={onClick}
+      className="bg-[var(--bg-surface)] border border-[var(--border)] rounded-2xl overflow-hidden cursor-pointer hover:border-indigo-400/50 dark:hover:border-indigo-500/30 hover:shadow-xl hover:shadow-black/8 dark:hover:shadow-black/30 transition-colors flex flex-col group">
+      <motion.div className={`h-1 w-full ${d.bar}`}
+        whileHover={{ scaleX:1, originX:0 }}/>
       <div className="p-5 flex flex-col gap-4">
         <div className="flex items-start justify-between gap-3">
           <div className="flex-1 min-w-0">
-            <span className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-md mb-2 ${d.chip}`}><span>{d.icon}</span>{d.label}</span>
+            <motion.span whileHover={{scale:1.02}} className={`inline-flex items-center gap-1.5 text-[11px] font-bold px-2 py-0.5 rounded-md mb-2 ${d.chip}`}>
+              {d.label}
+            </motion.span>
             <h3 className="font-bold text-base text-[var(--text-primary)] leading-snug truncate group-hover:text-indigo-600 dark:group-hover:text-indigo-400 transition-colors">{group.name}</h3>
             {group.description && <p className="text-xs text-[var(--text-muted)] mt-1 line-clamp-1">{group.description}</p>}
           </div>
@@ -53,6 +69,6 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
           {showJoin && !isMine && group.status==='locked' && !full && <Badge variant="locked">Locked</Badge>}
         </div>
       </div>
-    </Card>
+    </motion.div>
   )
 }

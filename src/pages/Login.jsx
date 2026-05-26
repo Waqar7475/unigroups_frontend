@@ -1,4 +1,5 @@
 import { useState } from 'react'
+import { motion } from 'framer-motion'
 import Icon    from '../components/ui/Icons.jsx'
 import { useAuth }  from '../context/AuthContext.jsx'
 import { authAPI }  from '../api/auth.js'
@@ -6,6 +7,7 @@ import Button  from '../components/ui/Button.jsx'
 import Input   from '../components/ui/Input.jsx'
 import Alert   from '../components/ui/Alert.jsx'
 import { extractError } from '../hooks/useApi.js'
+import { staggerContainer, fadeUp, scaleIn, spring } from '../utils/animations.js'
 
 export default function Login({ onSwitch }) {
   const { login } = useAuth()
@@ -44,7 +46,7 @@ export default function Login({ onSwitch }) {
             </div>
             <span className="font-bold text-lg text-[var(--text-primary)]">UniGroups</span>
           </div>
-          <h1 className="text-6xl font-bold text-[var(--text-primary)] leading-tight mb-4">Welcome<br/>back.</h1>
+          <motion.h1 initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{...spring.smooth,delay:0.2}} className="text-6xl font-bold text-[var(--text-primary)] leading-tight mb-4">Welcome<br/>back.</motion.h1>
           <p className="text-[var(--text-secondary)] text-sm">Superior University<br/>Group Management System</p>
         </div>
         <div className="space-y-3">
@@ -75,11 +77,11 @@ export default function Login({ onSwitch }) {
               <Button variant="ghost" size="sm" loading={resending} onClick={resend} className="text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-400/10 text-xs">Resend code</Button>
             </div>
           )}
-          <form onSubmit={submit} className="space-y-4 mt-5">
+          <motion.form variants={staggerContainer} initial="initial" animate="animate" onSubmit={submit} className="space-y-4 mt-5">
             <Input label="Roll Number" icon={<Icon name="creditCard" size={15}/>} placeholder="SU72-BSSEM-F25-017" value={roll} onChange={e=>setRoll(e.target.value.toUpperCase())} mono required/>
             <Input label="Password" icon={<Icon name="keyRound" size={15}/>} type="password" placeholder="••••••••" value={pass} onChange={e=>setPass(e.target.value)} required/>
             <Button type="submit" size="lg" loading={loading} fullWidth>Sign In <Icon name="arrowRight" size={16}/></Button>
-          </form>
+          </motion.form>
           <div className="flex items-center gap-3 my-6">
             <div className="h-px flex-1 bg-[var(--border)]"/>
             <span className="text-xs text-[var(--text-faint)]">or</span>

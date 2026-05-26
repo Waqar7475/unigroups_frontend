@@ -1,6 +1,13 @@
+import { motion } from 'framer-motion'
+import { spring } from '../../utils/animations.js'
+
 export default function Input({ label, hint, icon, type='text', placeholder='', value, onChange, required=false, min, max, disabled=false, mono=false, className='' }) {
   return (
-    <div className={`flex flex-col gap-1.5 ${className}`}>
+    <motion.div
+      className={`flex flex-col gap-1.5 ${className}`}
+      initial={{ opacity:0, y:10 }}
+      animate={{ opacity:1, y:0 }}
+      transition={spring.smooth}>
       {label && (
         <div className="flex justify-between">
           <label className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">
@@ -17,13 +24,14 @@ export default function Input({ label, hint, icon, type='text', placeholder='', 
           className={`w-full py-2.5 px-4 text-sm
             bg-[var(--bg-base)] border border-[var(--border)]
             text-[var(--text-primary)] placeholder-[var(--text-faint)]
-            rounded-xl outline-none transition-all
+            rounded-xl outline-none transition-all duration-200
             focus:border-indigo-500 focus:ring-2 focus:ring-indigo-500/15
+            focus:scale-[1.01]
             disabled:opacity-40
             ${icon ? 'pl-10' : ''}
             ${mono ? 'font-mono tracking-wider uppercase text-indigo-600 dark:text-indigo-400' : ''}`}
         />
       </div>
-    </div>
+    </motion.div>
   )
 }
