@@ -1,3 +1,4 @@
+import { motion, AnimatePresence } from 'framer-motion'
 import Icon from '../components/ui/Icons.jsx'
 import { useEffect, useState } from 'react'
 import { useAuth }   from '../context/AuthContext.jsx'
