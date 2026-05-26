@@ -18,8 +18,6 @@ export default function Card({ children, onClick, className='', padding=true, gl
         ${padding ? 'p-5' : ''}
         ${className}`}
       style={{
-        backdropFilter: 'blur(20px) saturate(160%)',
-        WebkitBackdropFilter: 'blur(20px) saturate(160%)',
         boxShadow: 'var(--shadow-sm)',
       }}>
       {children}

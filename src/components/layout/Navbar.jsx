@@ -17,15 +17,13 @@ export default function Navbar({ onMenuToggle }) {
       transition={spring.smooth}
       className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-5 gap-4"
       style={{
-        background: dark
-          ? 'rgba(10,10,10,0.85)'
-          : 'rgba(248,250,255,0.85)',
-        backdropFilter: 'blur(24px) saturate(180%)',
-        WebkitBackdropFilter: 'blur(24px) saturate(180%)',
-        borderBottom: `1px solid var(--border)`,
+        background: dark ? '#0a0a0c' : 'rgba(248,250,255,0.92)',
+        backdropFilter: 'blur(24px) saturate(160%)',
+        WebkitBackdropFilter: 'blur(24px) saturate(160%)',
+        borderBottom: '1px solid var(--border)',
         boxShadow: dark
-          ? '0 1px 0 rgba(255,255,255,0.04), 0 4px 20px rgba(0,0,0,0.3)'
-          : '0 1px 0 rgba(255,255,255,0.8), 0 4px 20px rgba(0,0,0,0.05)',
+          ? '0 1px 0 rgba(255,255,255,0.04), 0 4px 24px rgba(0,0,0,0.5)'
+          : '0 1px 0 rgba(255,255,255,0.9), 0 4px 20px rgba(0,0,0,0.05)',
       }}>
       <motion.button onClick={onMenuToggle} whileTap={{scale:0.88}} whileHover={{scale:1.05}}
         className="lg:hidden p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-raised)] transition-colors">

@@ -92,9 +92,8 @@ export default function Sidebar({ open, setOpen }) {
       <aside
         className={`fixed top-16 left-0 bottom-0 z-40 w-64 flex flex-col transition-transform duration-300 ${open?'translate-x-0':'-translate-x-full lg:translate-x-0'}`}
         style={{
-          background: 'var(--bg-base)',
+          background: 'var(--bg-surface)',
           borderRight: '1px solid var(--border)',
-          backdropFilter: 'blur(24px)',
         }}>
 
         {/* Subtle gradient top */}
