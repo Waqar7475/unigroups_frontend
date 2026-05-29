@@ -7,7 +7,7 @@ import Button  from '../components/ui/Button.jsx'
 import Input   from '../components/ui/Input.jsx'
 import Alert   from '../components/ui/Alert.jsx'
 import { extractError } from '../hooks/useApi.js'
-import { staggerContainer, fadeUp, scaleIn, spring } from '../utils/animations.js'
+import { staggerContainer, fadeUp, scaleIn, spring, springSnappy, springSmooth, springBouncy, springInstant } from '../utils/animations.js'
 
 export default function Login({ onSwitch }) {
   const { login } = useAuth()
@@ -46,7 +46,7 @@ export default function Login({ onSwitch }) {
             </div>
             <span className="font-bold text-lg text-[var(--text-primary)]">UniGroups</span>
           </div>
-          <motion.h1 initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{...spring.smooth,delay:0.2}} className="text-6xl font-bold text-[var(--text-primary)] leading-tight mb-4">Welcome<br/>back.</motion.h1>
+          <motion.h1 initial={{opacity:0,y:30}} animate={{opacity:1,y:0}} transition={{...springSmooth,delay:0.2}} className="text-6xl font-bold text-[var(--text-primary)] leading-tight mb-4">Welcome<br/>back.</motion.h1>
           <p className="text-[var(--text-secondary)] text-sm">Superior University<br/>Group Management System</p>
         </div>
         <div className="space-y-3">

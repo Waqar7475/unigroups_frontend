@@ -2,7 +2,7 @@ import { useState, useEffect, useRef, useCallback } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 import Icon from './Icons.jsx'
 import { notifAPI } from '../../api/notifications.js'
-import { dropDown, fadeUp, staggerContainer, bellShake, spring } from '../../utils/animations.js'
+import { dropDown, fadeUp, staggerContainer, spring, springSnappy, springSmooth, springBouncy, springInstant } from '../../utils/animations.js'
 
 const TYPE_ICON = {
   join_request:      { icon:'userPlus',   color:'text-indigo-600 dark:text-indigo-400',  bg:'bg-indigo-50 dark:bg-indigo-500/10' },
@@ -86,7 +86,7 @@ export default function NotificationBell() {
         whileHover={{ scale:1.08 }}
         whileTap={{ scale:0.92 }}
         animate={shake ? { rotate:[0,-15,15,-10,10,-5,5,0] } : {}}
-        transition={shake ? { duration:0.5 } : spring.snappy}
+        transition={shake ? { duration:0.5 } : springSnappy}
         className="relative p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-raised)] transition-colors">
         <Icon name="bell" size={17}/>
         <AnimatePresence>
@@ -96,7 +96,7 @@ export default function NotificationBell() {
               initial={{ scale:0, opacity:0 }}
               animate={{ scale:1, opacity:1 }}
               exit={{ scale:0, opacity:0 }}
-              transition={spring.bouncy}
+              transition={springBouncy}
               className="absolute -top-0.5 -right-0.5 min-w-[16px] h-4 px-1 bg-red-500 text-white text-[9px] font-bold rounded-full flex items-center justify-center leading-none">
               {unread > 9 ? '9+' : unread}
             </motion.span>
@@ -120,7 +120,7 @@ export default function NotificationBell() {
                 <span className="font-bold text-sm text-[var(--text-primary)]">Notifications</span>
                 <AnimatePresence>
                   {unread > 0 && (
-                    <motion.span initial={{scale:0}} animate={{scale:1}} exit={{scale:0}} transition={spring.bouncy}
+                    <motion.span initial={{scale:0}} animate={{scale:1}} exit={{scale:0}} transition={springBouncy}
                       className="px-1.5 py-0.5 bg-red-500 text-white text-[10px] font-bold rounded-full">
                       {unread}
                     </motion.span>
@@ -142,7 +142,7 @@ export default function NotificationBell() {
                   <Icon name="loader" size={20} className="animate-spin text-[var(--text-muted)] mx-auto"/>
                 </div>
               ) : notifs.length === 0 ? (
-                <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={spring.smooth}
+                <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={springSmooth}
                   className="py-10 text-center">
                   <Icon name="bell" size={28} className="text-[var(--text-faint)] mx-auto mb-2"/>
                   <p className="text-sm text-[var(--text-muted)] font-medium">No notifications</p>
@@ -170,7 +170,7 @@ export default function NotificationBell() {
                                 {n.title}
                               </p>
                               {!n.is_read && (
-                                <motion.div initial={{scale:0}} animate={{scale:1}} transition={spring.bouncy}
+                                <motion.div initial={{scale:0}} animate={{scale:1}} transition={springBouncy}
                                   className="w-1.5 h-1.5 rounded-full bg-indigo-500 shrink-0 mt-1"/>
                               )}
                             </div>

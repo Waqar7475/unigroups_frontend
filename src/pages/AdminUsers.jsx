@@ -33,7 +33,7 @@ function AddModal({ onClose, onDone }) {
     <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       style={{background:'rgba(0,0,0,0.7)',backdropFilter:'blur(6px)'}}>
-      <motion.div initial={{y:60,opacity:0}} animate={{y:0,opacity:1}} exit={{y:60,opacity:0}} transition={spring.smooth}
+      <motion.div initial={{y:60,opacity:0}} animate={{y:0,opacity:1}} exit={{y:60,opacity:0}} transition={springSmooth}
         className="w-full sm:max-w-md rounded-t-3xl sm:rounded-2xl shadow-2xl max-h-[92vh] overflow-y-auto"
         style={{background:'var(--bg-surface)',border:'1px solid var(--border)'}}>
         <div className="flex items-center justify-between px-5 py-4" style={{borderBottom:'1px solid var(--border)'}}>
@@ -68,7 +68,7 @@ function EditDeptModal({ user, onClose, onSaved }) {
     <motion.div initial={{opacity:0}} animate={{opacity:1}} exit={{opacity:0}}
       className="fixed inset-0 z-50 flex items-end sm:items-center justify-center p-0 sm:p-4"
       style={{background:'rgba(0,0,0,0.7)',backdropFilter:'blur(6px)'}}>
-      <motion.div initial={{y:60,opacity:0}} animate={{y:0,opacity:1}} exit={{y:60,opacity:0}} transition={spring.smooth}
+      <motion.div initial={{y:60,opacity:0}} animate={{y:0,opacity:1}} exit={{y:60,opacity:0}} transition={springSmooth}
         className="w-full sm:max-w-sm rounded-t-3xl sm:rounded-2xl shadow-2xl"
         style={{background:'var(--bg-surface)',border:'1px solid var(--border)'}}>
         <div className="flex items-center justify-between px-5 py-4" style={{borderBottom:'1px solid var(--border)'}}>

@@ -3,7 +3,7 @@ import Icon   from '../ui/Icons.jsx'
 import Badge  from '../ui/Badge.jsx'
 import Button from '../ui/Button.jsx'
 import { Progress } from '../ui/misc.jsx'
-import { spring, fadeUp } from '../../utils/animations.js'
+import { spring, springSnappy, springSmooth, springBouncy, springInstant, fadeUp } from '../../utils/animations.js'
 
 const DEPT = {
   SE:{ label:'Software Engineering', gradient:'from-orange-500 to-amber-500',   chip:'bg-orange-50 text-orange-600 border-orange-200 dark:bg-orange-400/10 dark:text-orange-400 dark:border-orange-400/20' },
@@ -19,7 +19,7 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
 
   if (compact) return (
     <motion.div variants={fadeUp}
-      whileHover={{ x:4, transition:spring.snappy }}
+      whileHover={{ x:4, transition:springSnappy }}
       whileTap={{ scale:0.98 }}
       onClick={onClick}
       className="group flex items-center gap-4 px-4 py-3.5 rounded-2xl cursor-pointer transition-all"
@@ -45,7 +45,7 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
 
   return (
     <motion.div variants={fadeUp}
-      whileHover={{ y:-6, scale:1.01, transition:spring.snappy }}
+      whileHover={{ y:-6, scale:1.01, transition:springSnappy }}
       whileTap={{ scale:0.98 }}
       onClick={onClick}
       className="group rounded-2xl overflow-hidden cursor-pointer flex flex-col relative"
@@ -101,7 +101,7 @@ export default function GroupCard({ group, onClick, showJoin=false, onJoin, comp
             <motion.div
               initial={{width:0}}
               animate={{width:`${pct}%`}}
-              transition={{...spring.smooth, delay:0.2}}
+              transition={{...springSmooth, delay:0.2}}
               className={`h-full rounded-full bg-gradient-to-r ${full?'from-red-500 to-red-400':pct>=75?'from-amber-500 to-amber-400':'from-indigo-500 to-violet-500'}`}/>
           </div>
           <p className="text-xs text-[var(--text-faint)] mt-1">

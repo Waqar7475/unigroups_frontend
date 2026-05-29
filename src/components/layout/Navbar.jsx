@@ -5,7 +5,7 @@ import { useApp }  from '../../context/AppContext.jsx'
 import { Avatar }  from '../ui/misc.jsx'
 import Badge       from '../ui/Badge.jsx'
 import NotificationBell from '../ui/NotificationBell.jsx'
-import { spring } from '../../utils/animations.js'
+import { spring, springSnappy, springSmooth, springBouncy, springInstant } from '../../utils/animations.js'
 
 export default function Navbar({ onMenuToggle }) {
   const { user, logout, isAdmin } = useAuth()
@@ -14,7 +14,7 @@ export default function Navbar({ onMenuToggle }) {
     <motion.header
       initial={{ y:-64, opacity:0 }}
       animate={{ y:0, opacity:1 }}
-      transition={spring.smooth}
+      transition={springSmooth}
       className="fixed top-0 left-0 right-0 z-50 h-16 flex items-center px-5 gap-4"
       style={{
         background: dark ? '#0a0a0c' : 'rgba(248,250,255,0.92)',
@@ -31,8 +31,8 @@ export default function Navbar({ onMenuToggle }) {
       </motion.button>
 
       <motion.div className="flex items-center gap-2.5 mr-auto"
-        initial={{opacity:0,x:-10}} animate={{opacity:1,x:0}} transition={{...spring.smooth, delay:0.1}}>
-        <motion.div whileHover={{scale:1.08, rotate:5}} whileTap={{scale:0.95}} transition={spring.bouncy}
+        initial={{opacity:0,x:-10}} animate={{opacity:1,x:0}} transition={{...springSmooth, delay:0.1}}>
+        <motion.div whileHover={{scale:1.08, rotate:5}} whileTap={{scale:0.95}} transition={springBouncy}
           className="w-8 h-8 rounded-xl flex items-center justify-center shadow-lg shadow-indigo-500/30"
           style={{background:'linear-gradient(135deg,#4f46e5,#7c3aed)'}}>
           <Icon name="graduationCap" size={15} className="text-white"/>
@@ -42,13 +42,13 @@ export default function Navbar({ onMenuToggle }) {
       </motion.div>
 
       <motion.div className="flex items-center gap-1"
-        initial={{opacity:0,x:10}} animate={{opacity:1,x:0}} transition={{...spring.smooth, delay:0.15}}>
+        initial={{opacity:0,x:10}} animate={{opacity:1,x:0}} transition={{...springSmooth, delay:0.15}}>
         <NotificationBell/>
         <motion.button onClick={toggleDark} whileHover={{scale:1.08}} whileTap={{scale:0.88, rotate:20}}
-          transition={spring.snappy}
+          transition={springSnappy}
           className="p-2 rounded-xl text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-raised)] transition-colors"
           title={dark ? 'Light mode' : 'Dark mode'}>
-          <motion.div animate={{ rotate: dark ? 0 : 180 }} transition={spring.smooth}>
+          <motion.div animate={{ rotate: dark ? 0 : 180 }} transition={springSmooth}>
             {dark ? <Icon name="sun" size={17}/> : <Icon name="moon" size={17}/>}
           </motion.div>
         </motion.button>

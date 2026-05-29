@@ -4,20 +4,15 @@ import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
   plugins: [react(), tailwindcss()],
-
   build: {
-    // Warning limit increase (default 500kb hota hai)
-    chunkSizeWarningLimit: 2000,
-
-    // Better chunk splitting
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
-        manualChunks(id) {
-          if (id.includes('node_modules')) {
-            return 'vendor'
-          }
-        },
-      },
-    },
-  },
+        manualChunks: {
+          vendor:  ['react', 'react-dom'],
+          motion:  ['framer-motion'],
+        }
+      }
+    }
+  }
 })

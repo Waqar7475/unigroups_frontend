@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { spring } from '../../utils/animations.js'
+import { spring, springSnappy, springSmooth, springBouncy, springInstant } from '../../utils/animations.js'
 
 export default function Input({ label, hint, icon, type='text', placeholder='', value, onChange, required=false, min, max, disabled=false, mono=false, className='' }) {
   return (
@@ -7,7 +7,7 @@ export default function Input({ label, hint, icon, type='text', placeholder='', 
       className={`flex flex-col gap-1.5 ${className}`}
       initial={{ opacity:0, y:10 }}
       animate={{ opacity:1, y:0 }}
-      transition={spring.smooth}>
+      transition={springSmooth}>
       {label && (
         <div className="flex justify-between">
           <label className="text-xs font-semibold text-[var(--text-muted)] uppercase tracking-wider">

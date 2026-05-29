@@ -1,5 +1,5 @@
 import { motion } from 'framer-motion'
-import { cardHover, cardTap, spring } from '../../utils/animations.js'
+import { cardHover, cardTap, spring, springSnappy, springSmooth, springBouncy, springInstant } from '../../utils/animations.js'
 
 export default function Card({ children, onClick, className='', padding=true, glass=false }) {
   return (

@@ -3,7 +3,7 @@ import Icon from '../ui/Icons.jsx'
 import { useApp }  from '../../context/AppContext.jsx'
 import { useAuth } from '../../context/AuthContext.jsx'
 import { Avatar }  from '../ui/misc.jsx'
-import { spring, staggerContainer, fadeUp } from '../../utils/animations.js'
+import { spring, springSnappy, springSmooth, springBouncy, springInstant, staggerContainer, fadeUp } from '../../utils/animations.js'
 
 const NAV = [
   { id:'dashboard',     label:'Dashboard',     icon:'dashboard' },
@@ -19,8 +19,8 @@ const ADMIN_NAV = [
 function NavItem({ item, active, onClick, isAdmin }) {
   return (
     <motion.button onClick={onClick}
-      whileHover={{ x:3, transition:spring.snappy }}
-      whileTap={{ scale:0.97, transition:spring.instant }}
+      whileHover={{ x:3, transition:springSnappy }}
+      whileTap={{ scale:0.97, transition:springInstant }}
       className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-sm font-medium transition-all group relative overflow-hidden
         ${active
           ? isAdmin
@@ -46,11 +46,11 @@ function NavItem({ item, active, onClick, isAdmin }) {
               ? 'linear-gradient(135deg, rgba(239,68,68,0.06), rgba(239,68,68,0.02))'
               : 'linear-gradient(135deg, rgba(99,102,241,0.1), rgba(99,102,241,0.03))',
           }}
-          transition={spring.smooth}/>
+          transition={springSmooth}/>
       )}
       <motion.div
         animate={active ? { scale:1.1 } : { scale:1 }}
-        transition={spring.bouncy}
+        transition={springBouncy}
         className="w-7 h-7 rounded-lg flex items-center justify-center shrink-0 relative z-10 transition-all"
         style={active ? {
           background: isAdmin ? 'rgba(239,68,68,0.12)' : 'rgba(99,102,241,0.12)',
@@ -64,7 +64,7 @@ function NavItem({ item, active, onClick, isAdmin }) {
       </motion.div>
       <span className="relative z-10">{item.label}</span>
       {active && (
-        <motion.div initial={{opacity:0,x:-5}} animate={{opacity:1,x:0}} transition={spring.snappy} className="ml-auto relative z-10">
+        <motion.div initial={{opacity:0,x:-5}} animate={{opacity:1,x:0}} transition={springSnappy} className="ml-auto relative z-10">
           <Icon name="chevronRight" size={13} className={isAdmin ? 'text-red-400 opacity-60' : 'text-indigo-400 opacity-60'}/>
         </motion.div>
       )}
@@ -120,7 +120,7 @@ export default function Sidebar({ open, setOpen }) {
                 {ADMIN_NAV.map((item, i) => (
                   <motion.div key={item.id}
                     initial={{opacity:0, x:-10}} animate={{opacity:1, x:0}}
-                    transition={{...spring.smooth, delay: 0.35 + i*0.07}}>
+                    transition={{...springSmooth, delay: 0.35 + i*0.07}}>
                     <NavItem item={item} active={currentPage===item.id} onClick={()=>go(item.id)} isAdmin={true}/>
                   </motion.div>
                 ))}
@@ -129,7 +129,7 @@ export default function Sidebar({ open, setOpen }) {
           )}
         </nav>
 
-        <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{...spring.smooth,delay:0.4}}
+        <motion.div initial={{opacity:0,y:10}} animate={{opacity:1,y:0}} transition={{...springSmooth,delay:0.4}}
           className="px-3 py-4 relative"
           style={{borderTop:'1px solid var(--border)'}}>
           <motion.div whileHover={{scale:1.01}}

@@ -1,6 +1,6 @@
 import { motion } from 'framer-motion'
 import Icon from './Icons.jsx'
-import { buttonTap, buttonHover } from '../../utils/animations.js'
+import { buttonTap, buttonHover, springSnappy, springSmooth, springBouncy, springInstant } from '../../utils/animations.js'
 
 export default function Button({ children, variant='primary', size='md', loading=false, disabled=false, onClick, type='button', className='', fullWidth=false }) {
   const v = {

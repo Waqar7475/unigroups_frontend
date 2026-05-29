@@ -14,7 +14,7 @@ import AdminUsers   from './pages/AdminUsers.jsx'
 import AdminGroups   from './pages/AdminGroups.jsx'
 import LandingPage  from './pages/LandingPage.jsx'
 import Icon         from './components/ui/Icons.jsx'
-import { spring } from './utils/animations.js'
+import { spring, springSnappy, springSmooth, springBouncy, springInstant } from './utils/animations.js'
 
 const PAGES = {
   'dashboard':Dashboard, 'create-group':CreateGroup, 'browse-groups':BrowseGroups,
