@@ -21,8 +21,8 @@ const I = {
   crown:  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 17L6 7l6 5 6-5 3 10H3z"/><path d="M3 17h18" strokeLinecap="round"/></svg>,
 }
 
-const sp = { type:'spring', stiffness:400, damping:28, mass:0.8 }
-const sm = { type:'spring', stiffness:260, damping:28 }
+const spring = { type:'spring', stiffness:400, damping:28, mass:0.8 }
+const smooth = { type:'spring', stiffness:260, damping:28 }
 
 // Floating orb background
 function FloatingOrbs() {
@@ -83,8 +83,8 @@ function FeatureCard({ icon, title, desc, accent, delay }) {
       initial={{ opacity:0, y:32 }}
       whileInView={{ opacity:1, y:0 }}
       viewport={{ once:true, margin:'-60px' }}
-      transition={{ ...sm, delay }}
-      whileHover={{ y:-6, transition:{ ...sp } }}
+      transition={{ ...smooth, delay }}
+      whileHover={{ y:-6, transition:{ ...spring } }}
       style={{
         background:'rgba(255,255,255,0.04)',
         border:'1px solid rgba(255,255,255,0.08)',
@@ -93,7 +93,7 @@ function FeatureCard({ icon, title, desc, accent, delay }) {
         backdropFilter:'blur(12px)',
         cursor:'default',
       }}>
-      <motion.div whileHover={{ scale:1.1, rotate:5 }} transition={sp}
+      <motion.div whileHover={{ scale:1.1, rotate:5 }} transition={spring}
         style={{
           width:48, height:48, borderRadius:14,
           background:`linear-gradient(135deg, ${accent}22, ${accent}11)`,
@@ -116,7 +116,7 @@ function StepCard({ num, title, desc, delay }) {
       initial={{ opacity:0, x:-24 }}
       whileInView={{ opacity:1, x:0 }}
       viewport={{ once:true }}
-      transition={{ ...sm, delay }}
+      transition={{ ...smooth, delay }}
       style={{ display:'flex', gap:20, alignItems:'flex-start' }}>
       <div style={{
         width:44, height:44, borderRadius:14, flexShrink:0,
@@ -145,7 +145,7 @@ function AuthPanel({ onEnter }) {
     <motion.div
       initial={{ opacity:0, y:30, scale:0.97 }}
       animate={{ opacity:1, y:0, scale:1 }}
-      transition={{ ...sm, delay:0.5 }}
+      transition={{ ...smooth, delay:0.5 }}
       style={{
         background:'rgba(255,255,255,0.04)',
         backdropFilter:'blur(32px) saturate(150%)',
@@ -178,7 +178,7 @@ function AuthPanel({ onEnter }) {
                   background:'linear-gradient(135deg,#4f46e5,#7c3aed)',
                   boxShadow:'0 4px 16px rgba(99,102,241,0.4)',
                 }}
-                transition={sp}/>
+                transition={spring}/>
             )}
             <span style={{position:'relative', zIndex:1, textTransform:'capitalize'}}>{m}</span>
           </motion.button>
@@ -212,7 +212,7 @@ function AuthPanel({ onEnter }) {
         </div>
 
         {mode==='register' && (
-          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} transition={sm}>
+          <motion.div initial={{opacity:0,height:0}} animate={{opacity:1,height:'auto'}} transition={smooth}>
             <label style={{ fontSize:11, fontWeight:700, color:'rgba(255,255,255,0.4)', textTransform:'uppercase', letterSpacing:'0.08em', display:'block', marginBottom:7, fontFamily:'Outfit,sans-serif' }}>Full Name</label>
             <div style={{ position:'relative' }}>
               <span style={{ position:'absolute', left:13, top:'50%', transform:'translateY(-50%)', color:'rgba(255,255,255,0.3)' }}>{I.grad}</span>
@@ -305,10 +305,10 @@ export default function LandingPage({ onEnter }) {
   ]
 
   const stats = [
-    { n:2,   s:'',  label:'Departments' },
-    { n:100, s:'+', label:'Max Groups'  },
+    { n:2,   sfx:'',  label:'Departments' },
+    { n:100, sfx:'+', label:'Max Groups'  },
     { n:20,  s,     label:'Per Group'   },
-    { n:99,  s:'%', label:'Uptime'      },
+    { n:99,  sfx:'%', label:'Uptime'      },
   ]
 
   return (
@@ -319,10 +319,10 @@ export default function LandingPage({ onEnter }) {
         className="fixed top-0 left-0 right-0 z-50"
         initial={{ y:-64, opacity:0 }}
         animate={{ y:0, opacity:1 }}
-        transition={{ ...sm, delay:0.2 }}>
+        transition={{ ...smooth, delay:0.2 }}>
         <div style={{ maxWidth:1100, margin:'0 auto', padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between' }}>
           <div style={{ display:'flex', alignItems:'center', gap:10 }}>
-            <motion.div whileHover={{scale:1.1,rotate:5}} transition={sp}
+            <motion.div whileHover={{scale:1.1,rotate:5}} transition={spring}
               style={{ width:36, height:36, borderRadius:11, background:'linear-gradient(135deg,#4f46e5,#7c3aed)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 16px rgba(99,102,241,0.4)' }}>
               {I.grad}
             </motion.div>
@@ -358,13 +358,13 @@ export default function LandingPage({ onEnter }) {
 
           {/* Left text */}
           <div>
-            <motion.div initial={{opacity:0,y:-12}} animate={{opacity:1,y:0}} transition={{...sm,delay:0.3}}
+            <motion.div initial={{opacity:0,y:-12}} animate={{opacity:1,y:0}} transition={{...smooth,delay:0.3}}
               style={{ display:'inline-flex', alignItems:'center', gap:7, padding:'6px 14px', borderRadius:99, background:'rgba(99,102,241,0.12)', border:'1px solid rgba(99,102,241,0.25)', marginBottom:28 }}>
               <span style={{ fontSize:11, fontWeight:700, color:'#818cf8', letterSpacing:'0.06em', textTransform:'uppercase', fontFamily:'Outfit,sans-serif' }}>Superior University</span>
               <div style={{ display:'flex', gap:1 }}>{[0,1,2].map(i=><motion.span key={i} animate={{opacity:[0.4,1,0.4]}} transition={{duration:1.4,delay:i*0.2,repeat:Infinity}} style={{color:'#fbbf24',fontSize:11}}>{I.star}</motion.span>)}</div>
             </motion.div>
 
-            <motion.h1 initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{...sm,delay:0.4}}
+            <motion.h1 initial={{opacity:0,y:24}} animate={{opacity:1,y:0}} transition={{...smooth,delay:0.4}}
               style={{ fontSize:'clamp(36px,6vw,68px)', fontWeight:900, lineHeight:1.08, letterSpacing:'-2px', marginBottom:24, fontFamily:'Outfit,sans-serif' }}>
               Your University<br/>
               <span style={{ background:'linear-gradient(135deg,#6366f1,#a78bfa,#38bdf8)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>
@@ -372,12 +372,12 @@ export default function LandingPage({ onEnter }) {
               </span>
             </motion.h1>
 
-            <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{...sm,delay:0.5}}
+            <motion.p initial={{opacity:0,y:20}} animate={{opacity:1,y:0}} transition={{...smooth,delay:0.5}}
               style={{ fontSize:17, color:'#6b7a99', lineHeight:1.7, maxWidth:480, marginBottom:36, fontFamily:'Outfit,sans-serif' }}>
               Find study partners, create project teams, and manage your academic groups — all in one place built for Superior University students.
             </motion.p>
 
-            <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{...sm,delay:0.6}}
+            <motion.div initial={{opacity:0,y:16}} animate={{opacity:1,y:0}} transition={{...smooth,delay:0.6}}
               style={{ display:'flex', gap:12, flexWrap:'wrap' }}>
               <motion.button whileHover={{scale:1.04,boxShadow:'0 16px 48px rgba(99,102,241,0.45)'}} whileTap={{scale:0.97}} onClick={onEnter}
                 style={{ padding:'14px 32px', background:'linear-gradient(135deg,#4f46e5,#7c3aed)', border:'none', borderRadius:14, fontSize:15, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'Outfit,sans-serif', boxShadow:'0 8px 32px rgba(99,102,241,0.35)', display:'flex', alignItems:'center', gap:8 }}>
@@ -412,10 +412,10 @@ export default function LandingPage({ onEnter }) {
       <div style={{ padding:'60px 24px', borderTop:'1px solid rgba(255,255,255,0.05)', borderBottom:'1px solid rgba(255,255,255,0.05)' }}>
         <div style={{ maxWidth:900, margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:24 }}
           className="stats-grid">
-          {stats.map(({n,s:sfx,label},i)=>(
+          {stats.map(({n,sfx,label},i)=>(
             <motion.div key={label}
               initial={{opacity:0,y:20}} whileInView={{opacity:1,y:0}} viewport={{once:true}}
-              transition={{...sm,delay:i*0.08}}
+              transition={{...smooth,delay:i*0.08}}
               style={{ textAlign:'center', padding:'28px 16px', borderRadius:20, background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.06)' }}>
               <div style={{ fontSize:40, fontWeight:900, fontFamily:'Outfit,sans-serif', background:'linear-gradient(135deg,#6366f1,#a78bfa)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text', lineHeight:1 }}>
                 <Counter to={n} suffix={sfx}/>
@@ -428,7 +428,7 @@ export default function LandingPage({ onEnter }) {
 
       {/* ── FEATURES ── */}
       <div id="features" style={{ maxWidth:1100, margin:'0 auto', padding:'80px 24px' }}>
-        <motion.div initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={sm}
+        <motion.div initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={smooth}
           style={{ textAlign:'center', marginBottom:56 }}>
           <span style={{ fontSize:11, fontWeight:700, color:'#6366f1', textTransform:'uppercase', letterSpacing:'0.1em', fontFamily:'Outfit,sans-serif' }}>Everything You Need</span>
           <h2 style={{ fontSize:'clamp(28px,4vw,44px)', fontWeight:900, marginTop:12, letterSpacing:'-1px', fontFamily:'Outfit,sans-serif' }}>Built for Students,<br/>Powered by Simplicity</h2>
@@ -443,7 +443,7 @@ export default function LandingPage({ onEnter }) {
       {/* ── HOW IT WORKS ── */}
       <div style={{ padding:'80px 24px', background:'rgba(255,255,255,0.02)' }}>
         <div style={{ maxWidth:800, margin:'0 auto' }}>
-          <motion.div initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={sm}
+          <motion.div initial={{opacity:0,y:24}} whileInView={{opacity:1,y:0}} viewport={{once:true}} transition={smooth}
             style={{ textAlign:'center', marginBottom:56 }}>
             <span style={{ fontSize:11, fontWeight:700, color:'#6366f1', textTransform:'uppercase', letterSpacing:'0.1em', fontFamily:'Outfit,sans-serif' }}>How It Works</span>
             <h2 style={{ fontSize:'clamp(26px,4vw,40px)', fontWeight:900, marginTop:12, letterSpacing:'-1px', fontFamily:'Outfit,sans-serif' }}>Start in 3 Simple Steps</h2>
@@ -462,7 +462,7 @@ export default function LandingPage({ onEnter }) {
       {/* ── CTA ── */}
       <div style={{ padding:'80px 24px', textAlign:'center', position:'relative', overflow:'hidden' }}>
         <FloatingOrbs/>
-        <motion.div initial={{opacity:0,scale:0.95}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} transition={sm}
+        <motion.div initial={{opacity:0,scale:0.95}} whileInView={{opacity:1,scale:1}} viewport={{once:true}} transition={smooth}
           style={{ position:'relative', zIndex:1 }}>
           <h2 style={{ fontSize:'clamp(28px,5vw,52px)', fontWeight:900, letterSpacing:'-1.5px', marginBottom:16, fontFamily:'Outfit,sans-serif' }}>
             Ready to find your<br/>
