@@ -1,5 +1,3 @@
-import { cubicBezier } from 'framer-motion'
-
 // ── Spring configs ───────────────────────────────────────────
 export const springSnappy  = { type:'spring', stiffness:500, damping:30,  mass:0.8 }
 export const springSmooth  = { type:'spring', stiffness:300, damping:28,  mass:1   }
