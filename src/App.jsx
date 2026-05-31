@@ -12,7 +12,9 @@ import MyGroups     from './pages/MyGroups.jsx'
 import GroupDetails from './pages/GroupDetails.jsx'
 import AdminUsers   from './pages/AdminUsers.jsx'
 import AdminGroups   from './pages/AdminGroups.jsx'
+import LandingPage  from './pages/LandingPage.jsx'
 import Icon         from './components/ui/Icons.jsx'
+import { spring, springSnappy, springSmooth, springBouncy, springInstant } from './utils/animations.js'
 
 const PAGES = {
   'dashboard':Dashboard, 'create-group':CreateGroup, 'browse-groups':BrowseGroups,
@@ -22,7 +24,9 @@ const PAGES = {
 
 function PageRouter() { const { currentPage } = useApp(); const Page = PAGES[currentPage]||Dashboard; return <Page/> }
 function AuthShell() {
+  const [showApp, setShowApp] = useState(false)
   const [mode, setMode] = useState('login')
+  if (!showApp) return <LandingPage onEnter={() => setShowApp(true)}/>
   return mode==='login'
     ? <Login onSwitch={()=>setMode('signup')}/>
     : <Signup onSwitch={()=>setMode('login')}/>
