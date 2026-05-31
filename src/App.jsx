@@ -12,7 +12,6 @@ import MyGroups     from './pages/MyGroups.jsx'
 import GroupDetails from './pages/GroupDetails.jsx'
 import AdminUsers   from './pages/AdminUsers.jsx'
 import AdminGroups   from './pages/AdminGroups.jsx'
-import LandingPage  from './pages/LandingPage.jsx'
 import Icon         from './components/ui/Icons.jsx'
 import { spring, springSnappy, springSmooth, springBouncy, springInstant } from './utils/animations.js'
 
