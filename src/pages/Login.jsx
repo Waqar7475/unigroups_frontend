@@ -8,9 +8,11 @@ import Input   from '../components/ui/Input.jsx'
 import Alert   from '../components/ui/Alert.jsx'
 import { extractError } from '../hooks/useApi.js'
 import { staggerContainer, fadeUp, scaleIn, spring, springSnappy, springSmooth, springBouncy, springInstant } from '../utils/animations.js'
+import { useApp } from '../context/AppContext.jsx'
 
 export default function Login({ onSwitch }) {
   const { login } = useAuth()
+  const { dark, toggleDark } = useApp()
   const [roll, setRoll] = useState('')
   const [pass, setPass] = useState('')
   const [loading, setLoad]       = useState(false)
