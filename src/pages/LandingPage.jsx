@@ -248,7 +248,7 @@ export default function LandingPage({ onEnter }) {
                 </motion.button>
               </motion.div>
               <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.6 }} style={{ display:'flex', gap:20, flexWrap:'wrap' }}>
-                {['Free for all students','No credit card','Instant access'].map((txt,i) => (
+                {['Free for all students','Instant access'].map((txt,i) => (
                   <div key={i} style={{ display:'flex', alignItems:'center', gap:6, fontSize:12.5, color:'rgba(255,255,255,0.35)', fontFamily:'Outfit,sans-serif' }}>
                     <span style={{ color:'#4ade80', display:'flex' }}>{Ico.check}</span>{txt}
                   </div>
