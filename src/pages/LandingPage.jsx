@@ -238,12 +238,12 @@ export default function LandingPage({ onEnter }) {
               <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ ...spSmooth, delay:0.4 }}
                 style={{ display:'flex', gap:12, flexWrap:'wrap', marginBottom:36 }}>
                 <motion.button whileHover={{ scale:1.04, boxShadow:'0 16px 48px rgba(99,102,241,0.45)' }} whileTap={{ scale:0.97 }} onClick={onEnter}
-                  style={{ padding:'14px 32px', background:'linear-gradient(135deg,#4f46e5,#7c3aed)', border:'none', borderRadius:14, fontSize:15, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'Outfit,sans-serif', boxShadow:'0 8px 32px rgba(99,102,241,0.35)', display:'flex', alignItems:'center', gap:8 }}>
+                  style={{ padding:'14px 32px', minWidth:210, justifyContent:'center', background:'linear-gradient(135deg,#4f46e5,#7c3aed)', border:'none', borderRadius:14, fontSize:15, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'Outfit,sans-serif', boxShadow:'0 8px 32px rgba(99,102,241,0.35)', display:'flex', alignItems:'center', gap:8 }}>
                   Get Started Free {Ico.arrow}
                 </motion.button>
                 <motion.button whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior:'smooth' })}
-                  style={{ padding:'14px 32px', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:14, fontSize:15, fontWeight:600, color:'rgba(255,255,255,0.65)', cursor:'pointer', fontFamily:'Outfit,sans-serif' }}>
+                  style={{ padding:'14px 32px', minWidth:210, display:'inline-flex', alignItems:'center', justifyContent:'center', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:14, fontSize:15, fontWeight:600, color:'rgba(255,255,255,0.65)', cursor:'pointer', fontFamily:'Outfit,sans-serif' }}>
                   See Features
                 </motion.button>
               </motion.div>
