@@ -154,7 +154,7 @@ export default function Login({ onSwitch }) {
         }
 
         .card:hover {
-          box-shadow: 0px 0px 30px 1px rgba(99, 102, 241, 0.35);
+          box-shadow: 0px 0px 25px 2px rgba(99, 102, 241, 0.4), 0px 0px 40px 4px rgba(167, 139, 250, 0.25), 0px 0px 50px 6px rgba(56, 189, 248, 0.15);
         }
 
         .form-uiverse {
@@ -181,9 +181,9 @@ export default function Login({ onSwitch }) {
           position: relative;
           display: flex;
           align-items: center;
-          border-radius: 25px;
-          height: 56px;
-          padding: 0 18px;
+          border-radius: 20px;
+          height: 48px;
+          padding: 0 16px;
           border: 1px solid var(--border);
           outline: none;
           color: var(--text-primary);
@@ -197,13 +197,13 @@ export default function Login({ onSwitch }) {
         }
 
         .input-icon {
-          height: 1.3em;
-          width: 1.3em;
+          height: 1.2em;
+          width: 1.2em;
           fill: var(--text-muted);
           color: var(--text-muted);
-          margin-right: 12px;
+          margin-right: 10px;
           flex-shrink: 0;
-          margin-top: 10px;
+          margin-top: 8px;
         }
 
         .input-field {
@@ -213,28 +213,28 @@ export default function Login({ onSwitch }) {
           width: 100%;
           color: var(--text-primary);
           font-family: 'Outfit', sans-serif;
-          font-size: 14.5px;
+          font-size: 14px;
           height: 100%;
-          padding-top: 18px;
+          padding-top: 14px;
           padding-bottom: 2px;
         }
 
         .floating-label {
           position: absolute;
-          left: 48px;
+          left: 44px;
           top: 50%;
           transform: translateY(-50%);
           color: var(--text-muted);
           font-family: 'Outfit', sans-serif;
-          font-size: 14.5px;
+          font-size: 13.5px;
           pointer-events: none;
           transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
         }
 
         .input-field:focus ~ .floating-label,
         .input-field:not(:placeholder-shown) ~ .floating-label {
-          top: 12px;
-          font-size: 10.5px;
+          top: 10px;
+          font-size: 9.5px;
           color: #6366f1;
           font-weight: 600;
         }
