@@ -6,7 +6,7 @@ export function AppProvider({ children }) {
   const [dark, setDark] = useState(() => {
     const saved = localStorage.getItem('ug-theme')
     if (saved) return saved === 'dark'
-    return false // default: light
+    return window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches
   })
 
   useEffect(() => {

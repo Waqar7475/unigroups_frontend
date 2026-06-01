@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react'
 import { motion, AnimatePresence, useScroll, useTransform, useInView } from 'framer-motion'
+import { useApp } from '../context/AppContext.jsx'
 
 const spSnappy = { type:'spring', stiffness:500, damping:30, mass:0.8 }
 const spSmooth = { type:'spring', stiffness:280, damping:28, mass:1 }
@@ -19,6 +20,8 @@ const Ico = {
   layers: <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><polygon points="12 2 2 7 12 12 22 7 12 2"/><polyline points="2 17 12 22 22 17"/><polyline points="2 12 12 17 22 12"/></svg>,
   crown:  <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><path d="M3 17L6 7l6 5 6-5 3 10H3z"/><path d="M3 17h18" strokeLinecap="round"/></svg>,
   chart:  <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/><line x1="2" y1="20" x2="22" y2="20"/></svg>,
+  sun:    <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M6.34 17.66l-1.41 1.41M19.07 4.93l-1.41 1.41" strokeLinecap="round" strokeLinejoin="round"/></svg>,
+  moon:   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9z" strokeLinecap="round" strokeLinejoin="round"/></svg>,
 }
 
 function Counter({ to, prefix='', suffix='' }) {
@@ -77,13 +80,13 @@ function FeatureCard({ icon, title, desc, accent, delay }) {
   return (
     <Reveal delay={delay}>
       <motion.div whileHover={{ y:-8, scale:1.02, transition:spSnappy }} whileTap={{ scale:0.98 }}
-        style={{ background:'rgba(255,255,255,0.03)', border:'1px solid rgba(255,255,255,0.07)', borderRadius:20, padding:'28px 24px', backdropFilter:'blur(16px)', height:'100%' }}>
+        style={{ background:'var(--bg-surface)', border:'1px solid var(--border)', borderRadius:20, padding:'28px 24px', boxShadow:'var(--shadow-sm)', height:'100%' }}>
         <motion.div whileHover={{ scale:1.12, rotate:8, transition:spBouncy }}
           style={{ width:50, height:50, borderRadius:15, background:`linear-gradient(135deg, ${accent}25, ${accent}10)`, border:`1px solid ${accent}30`, display:'flex', alignItems:'center', justifyContent:'center', color:accent, marginBottom:18, boxShadow:`0 8px 32px ${accent}15` }}>
           {icon}
         </motion.div>
-        <h3 style={{ fontSize:16, fontWeight:700, color:'#eef0f8', marginBottom:10, fontFamily:'Outfit,sans-serif', letterSpacing:'-0.3px' }}>{title}</h3>
-        <p style={{ fontSize:13.5, color:'#5a6a8a', lineHeight:1.7, fontFamily:'Outfit,sans-serif' }}>{desc}</p>
+        <h3 style={{ fontSize:16, fontWeight:700, color:'var(--text-primary)', marginBottom:10, fontFamily:'Outfit,sans-serif', letterSpacing:'-0.3px' }}>{title}</h3>
+        <p style={{ fontSize:13.5, color:'var(--text-secondary)', lineHeight:1.7, fontFamily:'Outfit,sans-serif' }}>{desc}</p>
       </motion.div>
     </Reveal>
   )
@@ -102,8 +105,8 @@ function Step({ num, title, desc, delay, accent }) {
         {num}
       </motion.div>
       <div>
-        <h3 style={{ fontSize:16, fontWeight:700, color:'#eef0f8', marginBottom:6, fontFamily:'Outfit,sans-serif' }}>{title}</h3>
-        <p style={{ fontSize:13.5, color:'#5a6a8a', lineHeight:1.7, fontFamily:'Outfit,sans-serif' }}>{desc}</p>
+        <h3 style={{ fontSize:16, fontWeight:700, color:'var(--text-primary)', marginBottom:6, fontFamily:'Outfit,sans-serif' }}>{title}</h3>
+        <p style={{ fontSize:13.5, color:'var(--text-secondary)', lineHeight:1.7, fontFamily:'Outfit,sans-serif' }}>{desc}</p>
       </div>
     </motion.div>
   )
@@ -118,11 +121,11 @@ function MockUI() {
   ]
   return (
     <motion.div initial={{ opacity:0, y:48, scale:0.94 }} animate={{ opacity:1, y:0, scale:1 }} transition={{ ...spSmooth, delay:0.5 }}
-      style={{ background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.1)', borderRadius:24, padding:20, backdropFilter:'blur(20px)', boxShadow:'0 32px 80px rgba(0,0,0,0.5)', width:'100%', maxWidth:360 }}>
-      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16, paddingBottom:12, borderBottom:'1px solid rgba(255,255,255,0.07)' }}>
+      style={{ background:'var(--bg-surface)', border:'1px solid var(--border)', borderRadius:24, padding:20, boxShadow:'var(--shadow-lg)', width:'100%', maxWidth:360 }}>
+      <div style={{ display:'flex', alignItems:'center', justifyContent:'space-between', marginBottom:16, paddingBottom:12, borderBottom:'1px solid var(--border)' }}>
         <div style={{ display:'flex', alignItems:'center', gap:8 }}>
           <div style={{ width:28, height:28, borderRadius:8, background:'linear-gradient(135deg,#4f46e5,#7c3aed)', display:'flex', alignItems:'center', justifyContent:'center' }}>{Ico.grad}</div>
-          <span style={{ fontFamily:'Outfit,sans-serif', fontWeight:700, fontSize:13, color:'#eef0f8' }}>UniGroups</span>
+          <span style={{ fontFamily:'Outfit,sans-serif', fontWeight:700, fontSize:13, color:'var(--text-primary)' }}>UniGroups</span>
         </div>
         <div style={{ display:'flex', gap:6 }}>
           {['#ff5f57','#febc2e','#28c840'].map((col,i) => <div key={i} style={{ width:10, height:10, borderRadius:'50%', background:col }}/>)}
@@ -133,13 +136,13 @@ function MockUI() {
           <motion.div key={i}
             initial={{ opacity:0, x:20 }} animate={{ opacity:1, x:0 }} transition={{ ...spSmooth, delay: 0.7 + i * 0.1 }}
             whileHover={{ x:4, scale:1.01, transition:spSnappy }}
-            style={{ background:'rgba(255,255,255,0.04)', border:'1px solid rgba(255,255,255,0.07)', borderLeft:`3px solid ${card.color}`, borderRadius:12, padding:'10px 12px', display:'flex', alignItems:'center', justifyContent:'space-between', cursor:'pointer' }}>
+            style={{ background:'var(--bg-raised)', border:'1px solid var(--border)', borderLeft:`3px solid ${card.color}`, borderRadius:12, padding:'10px 12px', display:'flex', alignItems:'center', justifyContent:'space-between', cursor:'pointer' }}>
             <div>
-              <p style={{ fontSize:12, fontWeight:700, color:'#eef0f8', fontFamily:'Outfit,sans-serif', marginBottom:2 }}>{card.name}</p>
+              <p style={{ fontSize:12, fontWeight:700, color:'var(--text-primary)', fontFamily:'Outfit,sans-serif', marginBottom:2 }}>{card.name}</p>
               <div style={{ display:'flex', alignItems:'center', gap:6 }}>
                 <span style={{ fontSize:10, color:card.color, fontWeight:600, fontFamily:'Outfit,sans-serif' }}>{card.dept}</span>
-                <span style={{ fontSize:10, color:'#3a4a66' }}>·</span>
-                <span style={{ fontSize:10, color:'#3a4a66', fontFamily:'Outfit,sans-serif' }}>{card.members}/{card.max}</span>
+                <span style={{ fontSize:10, color:'var(--text-muted)' }}>·</span>
+                <span style={{ fontSize:10, color:'var(--text-muted)', fontFamily:'Outfit,sans-serif' }}>{card.members}/{card.max}</span>
               </div>
             </div>
             <span style={{ fontSize:9, fontWeight:700, padding:'3px 8px', borderRadius:6, background: card.status==='open' ? 'rgba(74,222,128,0.1)' : 'rgba(148,163,184,0.1)', color: card.status==='open' ? '#4ade80' : '#64748b', border: `1px solid ${card.status==='open' ? 'rgba(74,222,128,0.2)' : 'rgba(148,163,184,0.15)'}`, fontFamily:'Outfit,sans-serif', textTransform:'uppercase', letterSpacing:'0.5px' }}>
@@ -149,11 +152,11 @@ function MockUI() {
         ))}
       </div>
       <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:1.2 }}
-        style={{ display:'flex', gap:8, marginTop:12, paddingTop:12, borderTop:'1px solid rgba(255,255,255,0.06)' }}>
+        style={{ display:'flex', gap:8, marginTop:12, paddingTop:12, borderTop:'1px solid var(--border)' }}>
         {[{lbl:'Groups',vl:'4'},{lbl:'Members',vl:'18'},{lbl:'Depts',vl:'2'}].map(({lbl,vl})=>(
-          <div key={lbl} style={{ flex:1, textAlign:'center', padding:'8px 4px', background:'rgba(255,255,255,0.03)', borderRadius:8 }}>
+          <div key={lbl} style={{ flex:1, textAlign:'center', padding:'8px 4px', background:'var(--bg-raised)', borderRadius:8 }}>
             <p style={{ fontSize:16, fontWeight:800, color:'#6366f1', fontFamily:'Outfit,sans-serif', lineHeight:1 }}>{vl}</p>
-            <p style={{ fontSize:9, color:'#3a4a66', fontFamily:'Outfit,sans-serif', marginTop:2 }}>{lbl}</p>
+            <p style={{ fontSize:9, color:'var(--text-muted)', fontFamily:'Outfit,sans-serif', marginTop:2 }}>{lbl}</p>
           </div>
         ))}
       </motion.div>
@@ -162,9 +165,16 @@ function MockUI() {
 }
 
 export default function LandingPage({ onEnter }) {
-  const { scrollY } = useScroll()
-  const navBg  = useTransform(scrollY, [0, 80], ['rgba(6,6,8,0)',    'rgba(6,6,8,0.95)'])
-  const navBlur= useTransform(scrollY, [0, 80], ['blur(0px)',         'blur(20px)'])
+  const { dark, toggleDark } = useApp()
+  const [scrolled, setScrolled] = useState(false)
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolled(window.scrollY > 20)
+    }
+    window.addEventListener('scroll', handleScroll)
+    return () => window.removeEventListener('scroll', handleScroll)
+  }, [])
 
   const features = [
     { icon:Ico.grad,   title:'Roll Number Login',        desc:'Register with your university roll number. Email OTP verification keeps the platform secure and student-only.', accent:'#6366f1', delay:0 },
@@ -193,12 +203,19 @@ export default function LandingPage({ onEnter }) {
   ]
 
   return (
-    <div style={{ background:'#060608', minHeight:'100vh', color:'#eef0f8', overflowX:'hidden', position:'relative' }}>
+    <div style={{ background:'var(--bg-base)', minHeight:'100vh', color:'var(--text-primary)', overflowX:'hidden', position:'relative', transition:'background 0.3s, color 0.3s' }}>
       {/* Noise */}
-      <div style={{ position:'fixed', inset:0, zIndex:1, pointerEvents:'none', opacity:0.025, backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }}/>
+      <div style={{ position:'fixed', inset:0, zIndex:1, pointerEvents:'none', opacity:0.02, backgroundImage:`url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E")` }}/>
 
       {/* Nav */}
-      <motion.nav style={{ position:'fixed', top:0, left:0, right:0, zIndex:100, padding:'0 24px', height:64, display:'flex', alignItems:'center', justifyContent:'space-between', background:navBg, backdropFilter:navBlur, borderBottom:'1px solid rgba(255,255,255,0)' }}>
+      <motion.nav style={{ 
+        position:'fixed', top:0, left:0, right:0, zIndex:100, padding:'0 24px', height:64, 
+        display:'flex', alignItems:'center', justifyContent:'space-between', 
+        background: scrolled ? 'var(--bg-surface)' : 'transparent',
+        backdropFilter: scrolled ? 'blur(20px)' : 'none',
+        borderBottom: scrolled ? '1px solid var(--border)' : '1px solid transparent',
+        transition:'background 0.3s, border 0.3s, backdrop-filter 0.3s'
+      }}>
         <motion.div initial={{ opacity:0, x:-20 }} animate={{ opacity:1, x:0 }} transition={{ ...spSmooth, delay:0.1 }} style={{ display:'flex', alignItems:'center', gap:10 }}>
           <motion.div whileHover={{ scale:1.08, rotate:5 }} transition={spBouncy}
             style={{ width:34, height:34, borderRadius:10, background:'linear-gradient(135deg,#4f46e5,#7c3aed)', display:'flex', alignItems:'center', justifyContent:'center', boxShadow:'0 4px 20px rgba(99,102,241,0.4)' }}>
@@ -206,17 +223,44 @@ export default function LandingPage({ onEnter }) {
           </motion.div>
           <span style={{ fontFamily:'Outfit,sans-serif', fontWeight:800, fontSize:17, letterSpacing:'-0.3px' }}>UniGroups</span>
         </motion.div>
-        <motion.button whileHover={{ scale:1.04 }} whileTap={{ scale:0.96 }} onClick={onEnter}
-          initial={{ opacity:0, x:20 }} animate={{ opacity:1, x:0 }} transition={{ ...spSmooth, delay:0.15 }}
-          style={{ padding:'9px 22px', background:'linear-gradient(135deg,#4f46e5,#7c3aed)', border:'none', borderRadius:12, fontSize:13, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'Outfit,sans-serif', boxShadow:'0 4px 20px rgba(99,102,241,0.35)', display:'flex', alignItems:'center', gap:6 }}>
-          Get Started {Ico.arrow}
-        </motion.button>
+        
+        <div style={{ display:'flex', alignItems:'center', gap:12 }}>
+          {/* Theme Toggle Button */}
+          <motion.button 
+            whileHover={{ scale:1.06, background:'var(--bg-hover)' }} 
+            whileTap={{ scale:0.95 }} 
+            onClick={toggleDark}
+            title={dark ? "Switch to Light Mode" : "Switch to Dark Mode"}
+            style={{ 
+              width:38, 
+              height:38, 
+              borderRadius:12, 
+              border:'1px solid var(--border)', 
+              background:'var(--bg-surface)', 
+              color:'var(--text-primary)', 
+              cursor:'pointer', 
+              display:'flex', 
+              alignItems:'center', 
+              justifyContent:'center',
+              boxShadow:'var(--shadow-sm)',
+              transition:'background 0.2s, border 0.2s, color 0.2s'
+            }}
+          >
+            {dark ? Ico.sun : Ico.moon}
+          </motion.button>
+
+          <motion.button whileHover={{ scale:1.04 }} whileTap={{ scale:0.96 }} onClick={onEnter}
+            initial={{ opacity:0, x:20 }} animate={{ opacity:1, x:0 }} transition={{ ...spSmooth, delay:0.15 }}
+            style={{ padding:'9px 22px', background:'linear-gradient(135deg,#4f46e5,#7c3aed)', border:'none', borderRadius:12, fontSize:13, fontWeight:700, color:'#fff', cursor:'pointer', fontFamily:'Outfit,sans-serif', boxShadow:'0 4px 20px rgba(99,102,241,0.35)', display:'flex', alignItems:'center', gap:6 }}>
+            Get Started {Ico.arrow}
+          </motion.button>
+        </div>
       </motion.nav>
 
       {/* Hero */}
       <div style={{ position:'relative', minHeight:'100vh', display:'flex', alignItems:'center', overflow:'hidden' }}>
         <Orbs/>
-        <div style={{ position:'absolute', inset:0, opacity:0.025, backgroundImage:'linear-gradient(rgba(255,255,255,0.5) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.5) 1px, transparent 1px)', backgroundSize:'60px 60px', pointerEvents:'none' }}/>
+        <div style={{ position:'absolute', inset:0, opacity:0.03, backgroundImage: dark ? 'linear-gradient(rgba(255,255,255,0.03) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,0.03) 1px, transparent 1px)' : 'linear-gradient(rgba(99,102,241,0.05) 1px, transparent 1px), linear-gradient(90deg, rgba(99,102,241,0.05) 1px, transparent 1px)', backgroundSize:'60px 60px', pointerEvents:'none' }}/>
         <div style={{ maxWidth:1200, margin:'0 auto', padding:'100px 24px 60px', width:'100%', position:'relative', zIndex:2 }}>
           <div style={{ display:'grid', gridTemplateColumns:'1fr 1fr', gap:60, alignItems:'center' }} className="hero-grid">
             <div>
@@ -232,7 +276,7 @@ export default function LandingPage({ onEnter }) {
                 in seconds.
               </motion.h1>
               <motion.p initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ ...spSmooth, delay:0.3 }}
-                style={{ fontSize:17, color:'#5a6a8a', lineHeight:1.7, marginBottom:36, maxWidth:460, fontFamily:'Outfit,sans-serif' }}>
+                style={{ fontSize:17, color:'var(--text-secondary)', lineHeight:1.7, marginBottom:36, maxWidth:460, fontFamily:'Outfit,sans-serif' }}>
                 UniGroups is the group management platform built for Superior University students. Create, join, and manage study groups with your classmates — all in one place.
               </motion.p>
               <motion.div initial={{ opacity:0, y:20 }} animate={{ opacity:1, y:0 }} transition={{ ...spSmooth, delay:0.4 }}
@@ -243,13 +287,13 @@ export default function LandingPage({ onEnter }) {
                 </motion.button>
                 <motion.button whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior:'smooth' })}
-                  style={{ padding:'14px 32px', minWidth:210, display:'inline-flex', alignItems:'center', justifyContent:'center', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:14, fontSize:15, fontWeight:600, color:'rgba(255,255,255,0.65)', cursor:'pointer', fontFamily:'Outfit,sans-serif' }}>
+                  style={{ padding:'14px 32px', minWidth:210, display:'inline-flex', alignItems:'center', justifyContent:'center', background:'transparent', border:'1px solid var(--border)', borderRadius:14, fontSize:15, fontWeight:600, color:'var(--text-secondary)', cursor:'pointer', fontFamily:'Outfit,sans-serif' }}>
                   See Features
                 </motion.button>
               </motion.div>
               <motion.div initial={{ opacity:0 }} animate={{ opacity:1 }} transition={{ delay:0.6 }} style={{ display:'flex', gap:20, flexWrap:'wrap' }}>
                 {['Free for all students','Instant access'].map((txt,i) => (
-                  <div key={i} style={{ display:'flex', alignItems:'center', gap:6, fontSize:12.5, color:'rgba(255,255,255,0.35)', fontFamily:'Outfit,sans-serif' }}>
+                  <div key={i} style={{ display:'flex', alignItems:'center', gap:6, fontSize:12.5, color:'var(--text-muted)', fontFamily:'Outfit,sans-serif' }}>
                     <span style={{ color:'#4ade80', display:'flex' }}>{Ico.check}</span>{txt}
                   </div>
                 ))}
@@ -260,22 +304,22 @@ export default function LandingPage({ onEnter }) {
         </div>
         <motion.div animate={{ y:[0,10,0] }} transition={{ repeat:Infinity, duration:2 }}
           style={{ position:'absolute', bottom:32, left:'50%', transform:'translateX(-50%)', zIndex:2 }}>
-          <div style={{ width:24, height:38, border:'2px solid rgba(255,255,255,0.15)', borderRadius:12, display:'flex', alignItems:'flex-start', justifyContent:'center', padding:4 }}>
-            <motion.div animate={{ y:[0,12,0] }} transition={{ repeat:Infinity, duration:1.5 }} style={{ width:4, height:8, background:'rgba(255,255,255,0.4)', borderRadius:2 }}/>
+          <div style={{ width:24, height:38, border:'2px solid var(--border)', borderRadius:12, display:'flex', alignItems:'flex-start', justifyContent:'center', padding:4 }}>
+            <motion.div animate={{ y:[0,12,0] }} transition={{ repeat:Infinity, duration:1.5 }} style={{ width:4, height:8, background:'var(--text-muted)', borderRadius:2 }}/>
           </div>
         </motion.div>
       </div>
 
       {/* Stats */}
-      <div style={{ padding:'60px 24px', borderTop:'1px solid rgba(255,255,255,0.05)', borderBottom:'1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ padding:'60px 24px', borderTop:'1px solid var(--border)', borderBottom:'1px solid var(--border)' }}>
         <div style={{ maxWidth:900, margin:'0 auto', display:'grid', gridTemplateColumns:'repeat(4,1fr)', gap:24 }} className="stats-grid">
           {statsList.map(({ num, sfx, lbl, pref }, i) => (
             <Reveal key={lbl} delay={i * 0.08}>
-              <div style={{ textAlign:'center', padding:'28px 16px', borderRadius:20, background:'rgba(255,255,255,0.02)', border:'1px solid rgba(255,255,255,0.05)' }}>
+              <div style={{ textAlign:'center', padding:'28px 16px', borderRadius:20, background:'var(--bg-raised)', border:'1px solid var(--border)', boxShadow:'var(--shadow-sm)' }}>
                 <div style={{ fontSize:44, fontWeight:900, fontFamily:'Outfit,sans-serif', background:'linear-gradient(135deg,#6366f1,#a78bfa)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text', lineHeight:1 }}>
                   <Counter to={num} prefix={pref} suffix={sfx}/>
                 </div>
-                <p style={{ fontSize:12.5, color:'rgba(255,255,255,0.35)', marginTop:8, fontFamily:'Outfit,sans-serif', fontWeight:500 }}>{lbl}</p>
+                <p style={{ fontSize:12.5, color:'var(--text-secondary)', marginTop:8, fontFamily:'Outfit,sans-serif', fontWeight:500 }}>{lbl}</p>
               </div>
             </Reveal>
           ))}
@@ -288,9 +332,9 @@ export default function LandingPage({ onEnter }) {
           <div style={{ textAlign:'center', marginBottom:60 }}>
             <span style={{ fontSize:11, fontWeight:700, color:'#6366f1', textTransform:'uppercase', letterSpacing:'0.12em', fontFamily:'Outfit,sans-serif' }}>Everything You Need</span>
             <h2 style={{ fontSize:'clamp(28px,4vw,46px)', fontWeight:900, marginTop:12, letterSpacing:'-1.5px', fontFamily:'Outfit,sans-serif', lineHeight:1.1 }}>
-              Built for students,<br/><span style={{ color:'#3a4a66' }}>by Superior University.</span>
+              Built for students,<br/><span style={{ color:'var(--text-secondary)' }}>by Superior University.</span>
             </h2>
-            <p style={{ fontSize:16, color:'#5a6a8a', marginTop:14, maxWidth:480, margin:'14px auto 0', fontFamily:'Outfit,sans-serif', lineHeight:1.65 }}>Every feature designed around how university students actually collaborate</p>
+            <p style={{ fontSize:16, color:'var(--text-muted)', marginTop:14, maxWidth:480, margin:'14px auto 0', fontFamily:'Outfit,sans-serif', lineHeight:1.65 }}>Every feature designed around how university students actually collaborate</p>
           </div>
         </Reveal>
         <div style={{ display:'grid', gridTemplateColumns:'repeat(3,1fr)', gap:16 }} className="features-grid">
@@ -299,7 +343,7 @@ export default function LandingPage({ onEnter }) {
       </div>
 
       {/* How it works */}
-      <div style={{ padding:'80px 24px', background:'rgba(255,255,255,0.015)', borderTop:'1px solid rgba(255,255,255,0.05)', borderBottom:'1px solid rgba(255,255,255,0.05)' }}>
+      <div style={{ padding:'80px 24px', background:'var(--bg-raised)', borderTop:'1px solid var(--border)', borderBottom:'1px solid var(--border)' }}>
         <div style={{ maxWidth:800, margin:'0 auto' }}>
           <Reveal>
             <div style={{ textAlign:'center', marginBottom:56 }}>
@@ -328,16 +372,16 @@ export default function LandingPage({ onEnter }) {
           ].map(({ dept, lbl, col, desc, icon }) => (
             <Reveal key={dept}>
               <motion.div whileHover={{ y:-6, scale:1.01, transition:spSnappy }}
-                style={{ padding:32, borderRadius:24, background:`linear-gradient(135deg, ${col}08, transparent)`, border:`1px solid ${col}20`, position:'relative', overflow:'hidden' }}>
+                style={{ padding:32, borderRadius:24, background: dark ? `linear-gradient(135deg, ${col}08, transparent)` : `linear-gradient(135deg, ${col}05, var(--bg-surface))`, border:`1px solid ${col}30`, position:'relative', overflow:'hidden' }}>
                 <div style={{ position:'absolute', top:-20, right:-20, width:120, height:120, borderRadius:'50%', background:`radial-gradient(circle, ${col}15, transparent 70%)` }}/>
                 <div style={{ display:'flex', alignItems:'center', gap:12, marginBottom:16 }}>
                   <div style={{ width:48, height:48, borderRadius:14, background:`${col}18`, border:`1px solid ${col}25`, display:'flex', alignItems:'center', justifyContent:'center', color:col }}>{icon}</div>
                   <div>
                     <p style={{ fontSize:22, fontWeight:900, fontFamily:'Outfit,sans-serif', color:col }}>{dept}</p>
-                    <p style={{ fontSize:12, color:'#5a6a8a', fontFamily:'Outfit,sans-serif' }}>{lbl}</p>
+                    <p style={{ fontSize:12, color:'var(--text-secondary)', fontFamily:'Outfit,sans-serif' }}>{lbl}</p>
                   </div>
                 </div>
-                <p style={{ fontSize:14, color:'#5a6a8a', lineHeight:1.7, fontFamily:'Outfit,sans-serif' }}>{desc}</p>
+                <p style={{ fontSize:14, color:'var(--text-secondary)', lineHeight:1.7, fontFamily:'Outfit,sans-serif' }}>{desc}</p>
               </motion.div>
             </Reveal>
           ))}
@@ -358,7 +402,7 @@ export default function LandingPage({ onEnter }) {
               Ready to find your<br/>
               <span style={{ background:'linear-gradient(135deg,#6366f1,#a78bfa,#38bdf8)', WebkitBackgroundClip:'text', WebkitTextFillColor:'transparent', backgroundClip:'text' }}>study group?</span>
             </h2>
-            <p style={{ fontSize:16, color:'#5a6a8a', marginBottom:40, fontFamily:'Outfit,sans-serif', maxWidth:400, margin:'0 auto 40px' }}>
+            <p style={{ fontSize:16, color:'var(--text-secondary)', marginBottom:40, fontFamily:'Outfit,sans-serif', maxWidth:400, margin:'0 auto 40px' }}>
               Join Superior University students already using UniGroups to collaborate smarter.
             </p>
             <motion.button whileHover={{ scale:1.06, boxShadow:'0 20px 60px rgba(99,102,241,0.5)' }} whileTap={{ scale:0.97 }} onClick={onEnter}
@@ -370,17 +414,17 @@ export default function LandingPage({ onEnter }) {
       </div>
 
       {/* Footer */}
-      <div style={{ padding:'28px 24px', borderTop:'1px solid rgba(255,255,255,0.06)' }}>
+      <div style={{ padding:'28px 24px', borderTop:'1px solid var(--border)' }}>
         <div style={{ maxWidth:1100, margin:'0 auto', display:'flex', justifyContent:'space-between', alignItems:'center', flexWrap:'wrap', gap:12 }}>
           <div style={{ display:'flex', alignItems:'center', gap:8 }}>
             <div style={{ width:28, height:28, borderRadius:8, background:'linear-gradient(135deg,#4f46e5,#7c3aed)', display:'flex', alignItems:'center', justifyContent:'center' }}>{Ico.grad}</div>
-            <span style={{ fontFamily:'Outfit,sans-serif', fontWeight:700, fontSize:14, color:'rgba(255,255,255,0.5)' }}>UniGroups</span>
+            <span style={{ fontFamily:'Outfit,sans-serif', fontWeight:700, fontSize:14, color:'var(--text-secondary)' }}>UniGroups</span>
           </div>
-          <p style={{ fontSize:12, color:'rgba(255,255,255,0.2)', fontFamily:'Outfit,sans-serif' }}>© 2025 UniGroups — Superior University Group Management System</p>
+          <p style={{ fontSize:12, color:'var(--text-muted)', fontFamily:'Outfit,sans-serif' }}>© 2025 UniGroups — Superior University Group Management System</p>
           <div style={{ display:'flex', gap:16 }}>
             {['Features','How It Works','Get Started'].map(txt => (
               <span key={txt} onClick={txt==='Get Started' ? onEnter : undefined}
-                style={{ fontSize:12, color:'rgba(255,255,255,0.3)', fontFamily:'Outfit,sans-serif', cursor:'pointer' }}>{txt}</span>
+                style={{ fontSize:12, color:'var(--text-secondary)', fontFamily:'Outfit,sans-serif', cursor:'pointer' }}>{txt}</span>
             ))}
           </div>
         </div>
@@ -388,7 +432,6 @@ export default function LandingPage({ onEnter }) {
 
       <style>{`
         * { box-sizing:border-box; margin:0; padding:0; }
-        body { background:#060608 !important; }
         @media (max-width:768px) {
           .hero-grid { grid-template-columns:1fr !important; }
           .features-grid { grid-template-columns:1fr !important; }
