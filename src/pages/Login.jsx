@@ -36,9 +36,9 @@ export default function Login({ onSwitch }) {
   }
 
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] flex">
+    <div className="min-h-screen bg-[var(--bg-base)] flex transition-colors duration-300">
       {/* Left panel */}
-      <div className="hidden lg:flex flex-col justify-between w-5/12 p-12" style={{background:"var(--bg-surface)",borderRight:"1px solid var(--border)",backdropFilter:"blur(24px)"}}>
+      <div className="hidden lg:flex flex-col justify-between w-5/12 p-12" style={{background:"var(--bg-surface)",borderRight:"1px solid var(--border)",backdropFilter:"blur(24px)", transition:"background 0.3s, border 0.3s"}}>
         <div>
           <div className="flex items-center gap-3 mb-16">
             <div className="w-9 h-9 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
@@ -59,39 +59,212 @@ export default function Login({ onSwitch }) {
         </div>
       </div>
       {/* Right form */}
-      <div className="flex-1 flex items-center justify-center p-8" style={{background:"var(--bg-base)"}}>
+      <div className="flex-1 flex items-center justify-center p-8 bg-[var(--bg-base)] transition-colors duration-300">
         <div className="w-full max-w-sm">
-          <div className="flex items-center gap-3 mb-10 lg:hidden">
+          <div className="flex items-center gap-3 mb-6 lg:hidden">
             <div className="w-8 h-8 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
               <Icon name="graduationCap" size={16} className="text-white"/>
             </div>
             <span className="font-bold text-[var(--text-primary)]">UniGroups</span>
           </div>
-          <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-1">Sign in</h2>
-          <p className="text-sm text-[var(--text-secondary)] mb-7">Use your university roll number</p>
-          {ok && <div className="mb-3"><Alert type="success" message={ok}/></div>}
-          <Alert type="error" message={error} onClose={()=>{setError('');setUnver(false)}}/>
-          {unverified && (
-            <div className="mt-3 flex items-center justify-between gap-3 px-4 py-3 rounded-xl bg-amber-50 dark:bg-amber-400/8 border border-amber-200 dark:border-amber-400/20">
-              <span className="text-xs text-amber-700 dark:text-amber-400 font-medium">Email not verified</span>
-              <Button variant="ghost" size="sm" loading={resending} onClick={resend} className="text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-400/10 text-xs">Resend code</Button>
+
+          <form className="form-uiverse" onSubmit={submit}>
+            <p id="heading">Login</p>
+            
+            {ok && <div className="mb-2"><Alert type="success" message={ok}/></div>}
+            {error && <div className="mb-2"><Alert type="error" message={error} onClose={()=>{setError('');setUnver(false)}}/></div>}
+            
+            {unverified && (
+              <div className="mb-2 flex items-center justify-between gap-3 px-4 py-2.5 rounded-xl bg-amber-50 dark:bg-amber-400/8 border border-amber-200 dark:border-amber-400/20">
+                <span className="text-[11px] text-amber-700 dark:text-amber-400 font-medium">Email not verified</span>
+                <Button type="button" variant="ghost" size="sm" loading={resending} onClick={resend} className="text-amber-600 dark:text-amber-400 hover:bg-amber-100 dark:hover:bg-amber-400/10 text-[11px]">Resend code</Button>
+              </div>
+            )}
+
+            <div className="field">
+              <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" viewBox="0 0 16 16">
+                <path d="M13.106 7.222c0-2.967-2.249-5.032-5.482-5.032-3.35 0-5.646 2.318-5.646 5.702 0 3.493 2.235 5.708 5.762 5.708.862 0 1.689-.123 2.304-.335v-.862c-.43.199-1.354.328-2.29.328-2.926 0-4.813-1.88-4.813-4.798 0-2.844 1.921-4.881 4.594-4.881 2.735 0 4.608 1.688 4.608 4.156 0 1.682-.554 2.769-1.416 2.769-.492 0-.772-.28-.772-.76V5.206H8.923v.834h-.11c-.266-.595-.881-.964-1.6-.964-1.4 0-2.378 1.162-2.378 2.823 0 1.737.957 2.906 2.379 2.906.8 0 1.415-.39 1.709-1.087h.11c.081.67.703 1.148 1.503 1.148 1.572 0 2.57-1.415 2.57-3.643zm-7.177.704c0-1.197.54-1.907 1.456-1.907.93 0 1.524.738 1.524 1.907S8.308 9.84 7.371 9.84c-.895 0-1.442-.725-1.442-1.914z" />
+              </svg>
+              <input 
+                autoComplete="off" 
+                placeholder="Roll Number" 
+                className="input-field font-mono" 
+                type="text" 
+                value={roll}
+                onChange={e => setRoll(e.target.value.toUpperCase())}
+                required
+              />
             </div>
-          )}
-          <motion.form variants={staggerContainer} initial="initial" animate="animate" onSubmit={submit} className="space-y-4 mt-5">
-            <Input label="Roll Number" icon={<Icon name="creditCard" size={15}/>} placeholder="SU72-BSSEM-F25-017" value={roll} onChange={e=>setRoll(e.target.value.toUpperCase())} mono required/>
-            <Input label="Password" icon={<Icon name="keyRound" size={15}/>} type="password" placeholder="••••••••" value={pass} onChange={e=>setPass(e.target.value)} required/>
-            <Button type="submit" size="lg" loading={loading} fullWidth>Sign In <Icon name="arrowRight" size={16}/></Button>
-          </motion.form>
-          <div className="flex items-center gap-3 my-6">
-            <div className="h-px flex-1 bg-[var(--border)]"/>
-            <span className="text-xs text-[var(--text-faint)]">or</span>
-            <div className="h-px flex-1 bg-[var(--border)]"/>
-          </div>
-          <p className="text-center text-sm text-[var(--text-secondary)]">New student?{' '}
-            <button onClick={onSwitch} className="text-indigo-600 dark:text-indigo-400 font-semibold hover:text-indigo-700 dark:hover:text-indigo-300 transition-colors">Create account</button>
-          </p>
+            
+            <div className="field">
+              <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="currentColor" viewBox="0 0 16 16">
+                <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
+              </svg>
+              <input 
+                placeholder="Password" 
+                className="input-field" 
+                type="password" 
+                value={pass}
+                onChange={e => setPass(e.target.value)}
+                required
+              />
+            </div>
+
+            <div className="btn-row">
+              <button type="submit" disabled={loading} className="button1">
+                {loading ? 'Logging in...' : 'Login'}
+              </button>
+              <button type="button" onClick={onSwitch} className="button2">Sign Up</button>
+            </div>
+            
+            <button 
+              type="button" 
+              onClick={() => alert('Password reset services are handled directly by the University IT Helpdesk.')} 
+              className="button3"
+            >
+              Forgot Password
+            </button>
+          </form>
         </div>
       </div>
+
+      <style>{`
+        .form-uiverse {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 2.5em 2em 1.5em;
+          background-color: var(--bg-surface);
+          border: 1px solid var(--border);
+          border-radius: 25px;
+          transition: .4s ease-in-out;
+          width: 100%;
+          box-shadow: var(--shadow-lg);
+        }
+
+        .form-uiverse:hover {
+          transform: scale(1.02);
+          border-color: #6366f1;
+        }
+
+        #heading {
+          text-align: center;
+          margin-bottom: 1.2em;
+          color: var(--text-primary);
+          font-size: 1.5em;
+          font-weight: 800;
+          font-family: 'Outfit', sans-serif;
+          letter-spacing: -0.5px;
+        }
+
+        .field {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          gap: 0.8em;
+          border-radius: 25px;
+          padding: 0.8em 1.1em;
+          border: 1px solid var(--border);
+          outline: none;
+          color: var(--text-primary);
+          background-color: var(--bg-raised);
+          transition: border-color 0.25s, background-color 0.25s;
+        }
+
+        .field:focus-within {
+          border-color: #6366f1;
+          background-color: var(--bg-surface);
+        }
+
+        .input-icon {
+          height: 1.3em;
+          width: 1.3em;
+          fill: var(--text-muted);
+          color: var(--text-muted);
+        }
+
+        .input-field {
+          background: none;
+          border: none;
+          outline: none;
+          width: 100%;
+          color: var(--text-primary);
+          font-family: 'Outfit', sans-serif;
+          font-size: 14.5px;
+        }
+
+        .input-field::placeholder {
+          color: var(--text-faint);
+        }
+
+        .form-uiverse .btn-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          margin-top: 1.5em;
+        }
+
+        .button1 {
+          flex: 1.2;
+          padding: 0.8em;
+          border-radius: 12px;
+          border: none;
+          outline: none;
+          font-weight: 700;
+          font-family: 'Outfit', sans-serif;
+          transition: .3s ease-in-out;
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          color: white;
+          cursor: pointer;
+          box-shadow: 0 4px 15px rgba(99,102,241,0.25);
+        }
+
+        .button1:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+
+        .button2 {
+          flex: 1;
+          padding: 0.8em;
+          border-radius: 12px;
+          border: 1px solid var(--border);
+          outline: none;
+          font-weight: 600;
+          font-family: 'Outfit', sans-serif;
+          transition: .3s ease-in-out;
+          background-color: var(--bg-surface);
+          color: var(--text-secondary);
+          cursor: pointer;
+        }
+
+        .button2:hover {
+          background-color: var(--bg-hover);
+          color: var(--text-primary);
+        }
+
+        .button3 {
+          margin-top: 0.5em;
+          padding: 0.5em;
+          border-radius: 8px;
+          border: none;
+          outline: none;
+          font-size: 12px;
+          font-weight: 600;
+          font-family: 'Outfit', sans-serif;
+          transition: .3s ease-in-out;
+          background-color: transparent;
+          color: var(--text-muted);
+          cursor: pointer;
+          text-align: center;
+          width: 100%;
+        }
+
+        .button3:hover {
+          color: #ef4444;
+        }
+      `}</style>
     </div>
   )
 }
