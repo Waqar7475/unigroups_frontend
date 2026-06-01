@@ -23,19 +23,89 @@ function Step1({ onDone }) {
     catch (err) { setError(extractError(err)) } finally { setLoad(false) }
   }
   return <>
-    <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-1">Create account</h2>
-    <p className="text-sm text-[var(--text-secondary)] mb-7">Register with your university credentials</p>
+    <h2 className="text-2xl font-bold text-[var(--text-primary)] mb-1" id="heading">Create account</h2>
     <Alert type="error" message={error} onClose={()=>setError('')}/>
     <form onSubmit={submit} className="space-y-4 mt-5">
-      <Input label="Roll Number" icon={<Icon name="creditCard" size={15}/>} placeholder="SU72-BSSEM-F25-017" hint="Format: SU##-DEPT-X##-###" value={f.roll_number} onChange={e=>setF(p=>({...p,roll_number:e.target.value.toUpperCase()}))} mono required/>
+      <div className="field">
+        <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+          <rect x="2" y="5" width="20" height="14" rx="2" ry="2" />
+          <line x1="2" y1="10" x2="22" y2="10" />
+        </svg>
+        <input 
+          autoComplete="off" 
+          placeholder=" " 
+          className="input-field font-mono" 
+          type="text" 
+          value={f.roll_number} 
+          onChange={e=>setF(p=>({...p,roll_number:e.target.value.toUpperCase()}))} 
+          required
+        />
+        <span className="floating-label">Roll Number</span>
+      </div>
       <div className="grid grid-cols-2 gap-3">
-        <Input label="Full Name" icon={<Icon name="user" size={15}/>} placeholder="Ali Hassan" value={f.name} onChange={set('name')} required/>
-        <Input label="Email" icon={<Icon name="mail" size={15}/>} type="email" placeholder="ali@su.edu.pk" value={f.email} onChange={set('email')} required/>
+        <div className="field">
+          <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2" />
+            <circle cx="12" cy="7" r="4" />
+          </svg>
+          <input 
+            placeholder=" " 
+            className="input-field" 
+            type="text" 
+            value={f.name} 
+            onChange={set('name')} 
+            required
+          />
+          <span className="floating-label">Full Name</span>
+        </div>
+        <div className="field">
+          <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+            <path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z" />
+            <polyline points="22,6 12,13 2,6" />
+          </svg>
+          <input 
+            placeholder=" " 
+            className="input-field" 
+            type="email" 
+            value={f.email} 
+            onChange={set('email')} 
+            required
+          />
+          <span className="floating-label">Email</span>
+        </div>
       </div>
       <DeptSelector value={f.department} onChange={v=>setF(p=>({...p,department:v}))}/>
       <div className="grid grid-cols-2 gap-3">
-        <Input label="Password" icon={<Icon name="keyRound" size={15}/>} type="password" placeholder="Min. 8 chars" value={f.password} onChange={set('password')} required/>
-        <Input label="Confirm"  icon={<Icon name="keyRound" size={15}/>} type="password" placeholder="Repeat" value={f.password2} onChange={set('password2')} required/>
+        <div className="field">
+          <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <input 
+            placeholder=" " 
+            className="input-field" 
+            type="password" 
+            value={f.password} 
+            onChange={set('password')} 
+            required
+          />
+          <span className="floating-label">Password</span>
+        </div>
+        <div className="field">
+          <svg className="input-icon" xmlns="http://www.w3.org/2000/svg" width={16} height={16} fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" viewBox="0 0 24 24">
+            <rect x="3" y="11" width="18" height="11" rx="2" ry="2" />
+            <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+          </svg>
+          <input 
+            placeholder=" " 
+            className="input-field" 
+            type="password" 
+            value={f.password2} 
+            onChange={set('password2')} 
+            required
+          />
+          <span className="floating-label">Confirm</span>
+        </div>
       </div>
       <Button type="submit" size="lg" loading={loading} fullWidth>Create Account →</Button>
     </form>
@@ -107,8 +177,8 @@ export default function Signup({ onSwitch }) {
   const [step, setStep]     = useState(1)
   const [otpData, setOtpData] = useState(null)
   return (
-    <div className="min-h-screen bg-[var(--bg-base)] flex">
-      <div className="hidden lg:flex flex-col justify-between w-5/12 p-12" style={{background:"var(--bg-surface)",borderRight:"1px solid var(--border)",backdropFilter:"blur(24px)"}}>
+    <div className="min-h-screen bg-[var(--bg-base)] flex transition-colors duration-300">
+      <div className="hidden lg:flex flex-col justify-between w-5/12 p-12" style={{background:"var(--bg-surface)",borderRight:"1px solid var(--border)",backdropFilter:"blur(24px)", transition:"background 0.3s, border 0.3s"}}>
         <div>
           <div className="flex items-center gap-3 mb-16">
             <div className="w-9 h-9 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
@@ -133,17 +203,25 @@ export default function Signup({ onSwitch }) {
         </div>
         <p className="text-xs text-[var(--text-faint)]">Superior University · GMS</p>
       </div>
-      <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto">
+      <div className="flex-1 flex items-center justify-center p-8 overflow-y-auto bg-[var(--bg-base)] transition-colors duration-300">
         <div className="w-full max-w-md">
-          <div className="flex items-center gap-3 mb-10 lg:hidden">
+          <div className="flex items-center gap-3 mb-6 lg:hidden">
             <div className="w-8 h-8 rounded-xl bg-indigo-600 dark:bg-indigo-500 flex items-center justify-center">
               <Icon name="graduationCap" size={16} className="text-white"/>
             </div>
             <span className="font-bold text-[var(--text-primary)]">UniGroups</span>
           </div>
-          {step===1 ? <Step1 onDone={d=>{setOtpData(d);setStep(2)}}/> : <Step2 rollNumber={otpData.roll_number} email={otpData.email} devOtp={otpData.dev_otp}/>}
+
+          <div className="card">
+            <div className="card2">
+              <div className="form-uiverse">
+                {step===1 ? <Step1 onDone={d=>{setOtpData(d);setStep(2)}}/> : <Step2 rollNumber={otpData.roll_number} email={otpData.email} devOtp={otpData.dev_otp}/>}
+              </div>
+            </div>
+          </div>
+
           {step===1 && <>
-            <div className="flex items-center gap-3 my-6">
+            <div className="flex items-center gap-3 my-5">
               <div className="h-px flex-1 bg-[var(--border)]"/>
               <span className="text-xs text-[var(--text-faint)]">or</span>
               <div className="h-px flex-1 bg-[var(--border)]"/>
@@ -154,6 +232,147 @@ export default function Signup({ onSwitch }) {
           </>}
         </div>
       </div>
+
+      <style>{`
+        .card {
+          background-image: linear-gradient(163deg, #6366f1 0%, #a78bfa 100%);
+          border-radius: 26px;
+          padding: 1px;
+          transition: all 0.3s ease-in-out;
+          width: 100%;
+        }
+
+        .card2 {
+          border-radius: 25px;
+          background-color: var(--bg-surface);
+          transition: all 0.3s ease-in-out;
+          overflow: hidden;
+        }
+
+        .card2:hover {
+          transform: scale(0.99);
+        }
+
+        .card:hover {
+          box-shadow: 0px 0px 30px 1px rgba(99, 102, 241, 0.35);
+        }
+
+        .form-uiverse {
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding: 2.2em 2em 1.5em;
+          background-color: var(--bg-surface);
+          border-radius: 25px;
+          width: 100%;
+        }
+
+        #heading {
+          text-align: center;
+          margin-bottom: 1em;
+          color: var(--text-primary);
+          font-size: 1.5em;
+          font-weight: 800;
+          font-family: 'Outfit', sans-serif;
+          letter-spacing: -0.5px;
+        }
+
+        .field {
+          position: relative;
+          display: flex;
+          align-items: center;
+          border-radius: 25px;
+          height: 54px;
+          padding: 0 18px;
+          border: 1px solid var(--border);
+          outline: none;
+          color: var(--text-primary);
+          background-color: var(--bg-raised);
+          transition: border-color 0.25s, background-color 0.25s;
+        }
+
+        .field:focus-within {
+          border-color: #6366f1;
+          background-color: var(--bg-surface);
+        }
+
+        .input-icon {
+          height: 1.2em;
+          width: 1.2em;
+          fill: none;
+          stroke: var(--text-muted);
+          color: var(--text-muted);
+          margin-right: 12px;
+          flex-shrink: 0;
+          margin-top: 10px;
+        }
+
+        .input-field {
+          background: none;
+          border: none;
+          outline: none;
+          width: 100%;
+          color: var(--text-primary);
+          font-family: 'Outfit', sans-serif;
+          font-size: 14px;
+          height: 100%;
+          padding-top: 18px;
+          padding-bottom: 2px;
+        }
+
+        .floating-label {
+          position: absolute;
+          left: 48px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted);
+          font-family: 'Outfit', sans-serif;
+          font-size: 14px;
+          pointer-events: none;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field:focus ~ .floating-label,
+        .input-field:not(:placeholder-shown) ~ .floating-label {
+          top: 12px;
+          font-size: 10.5px;
+          color: #6366f1;
+          font-weight: 600;
+        }
+
+        .btn-row {
+          display: flex;
+          justify-content: space-between;
+          align-items: center;
+          gap: 12px;
+          margin-top: 1.5em;
+        }
+
+        .button1 {
+          flex: 1.2;
+          padding: 0.8em;
+          border-radius: 12px;
+          border: none;
+          outline: none;
+          font-weight: 700;
+          font-family: 'Outfit', sans-serif;
+          transition: .3s ease-in-out;
+          background: linear-gradient(135deg, #4f46e5, #7c3aed);
+          color: white;
+          cursor: pointer;
+          box-shadow: 0 4px 15px rgba(99,102,241,0.25);
+        }
+
+        .button1:hover {
+          transform: translateY(-2px);
+          box-shadow: 0 6px 20px rgba(99,102,241,0.4);
+        }
+
+        .button1:disabled {
+          opacity: 0.6;
+          cursor: not-allowed;
+        }
+      `}</style>
     </div>
   )
 }

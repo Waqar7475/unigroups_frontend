@@ -89,13 +89,14 @@ export default function Login({ onSwitch }) {
                   </svg>
                   <input 
                     autoComplete="off" 
-                    placeholder="Roll Number" 
+                    placeholder=" " 
                     className="input-field font-mono" 
                     type="text" 
                     value={roll}
                     onChange={e => setRoll(e.target.value.toUpperCase())}
                     required
                   />
+                  <span className="floating-label">Roll Number</span>
                 </div>
                 
                 <div className="field">
@@ -103,13 +104,14 @@ export default function Login({ onSwitch }) {
                     <path d="M8 1a2 2 0 0 1 2 2v4H6V3a2 2 0 0 1 2-2zm3 6V3a3 3 0 0 0-6 0v4a2 2 0 0 0-2 2v5a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V9a2 2 0 0 0-2-2z" />
                   </svg>
                   <input 
-                    placeholder="Password" 
+                    placeholder=" " 
                     className="input-field" 
                     type="password" 
                     value={pass}
                     onChange={e => setPass(e.target.value)}
                     required
                   />
+                  <span className="floating-label">Password</span>
                 </div>
 
                 <div className="btn-row">
@@ -176,12 +178,12 @@ export default function Login({ onSwitch }) {
         }
 
         .field {
+          position: relative;
           display: flex;
           align-items: center;
-          justify-content: center;
-          gap: 0.8em;
           border-radius: 25px;
-          padding: 0.8em 1.1em;
+          height: 56px;
+          padding: 0 18px;
           border: 1px solid var(--border);
           outline: none;
           color: var(--text-primary);
@@ -199,6 +201,9 @@ export default function Login({ onSwitch }) {
           width: 1.3em;
           fill: var(--text-muted);
           color: var(--text-muted);
+          margin-right: 12px;
+          flex-shrink: 0;
+          margin-top: 10px;
         }
 
         .input-field {
@@ -209,10 +214,29 @@ export default function Login({ onSwitch }) {
           color: var(--text-primary);
           font-family: 'Outfit', sans-serif;
           font-size: 14.5px;
+          height: 100%;
+          padding-top: 18px;
+          padding-bottom: 2px;
         }
 
-        .input-field::placeholder {
-          color: var(--text-faint);
+        .floating-label {
+          position: absolute;
+          left: 48px;
+          top: 50%;
+          transform: translateY(-50%);
+          color: var(--text-muted);
+          font-family: 'Outfit', sans-serif;
+          font-size: 14.5px;
+          pointer-events: none;
+          transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .input-field:focus ~ .floating-label,
+        .input-field:not(:placeholder-shown) ~ .floating-label {
+          top: 12px;
+          font-size: 10.5px;
+          color: #6366f1;
+          font-weight: 600;
         }
 
         .form-uiverse .btn-row {
