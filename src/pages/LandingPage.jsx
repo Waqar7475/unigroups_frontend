@@ -243,7 +243,7 @@ export default function LandingPage({ onEnter }) {
                 </motion.button>
                 <motion.button whileHover={{ scale:1.03 }} whileTap={{ scale:0.97 }}
                   onClick={() => document.getElementById('features')?.scrollIntoView({ behavior:'smooth' })}
-                  style={{ padding:'14px 28px', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:14, fontSize:15, fontWeight:600, color:'rgba(255,255,255,0.65)', cursor:'pointer', fontFamily:'Outfit,sans-serif' }}>
+                  style={{ padding:'14px 32px', background:'transparent', border:'1px solid rgba(255,255,255,0.1)', borderRadius:14, fontSize:15, fontWeight:600, color:'rgba(255,255,255,0.65)', cursor:'pointer', fontFamily:'Outfit,sans-serif' }}>
                   See Features
                 </motion.button>
               </motion.div>
